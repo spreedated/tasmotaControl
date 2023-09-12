@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:TasCon.ViewLogic.Converters"
+             xmlns:nconv="clr-namespace:neXn.Lib.Maui.ViewLogic.Converters;assembly=neXn.Lib.Maui"
+             xmlns:logic="clr-namespace:TasCon.Logic"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
+             xmlns:ve="clr-namespace:neXn.Lib.Maui.ViewElements;assembly=neXn.Lib.Maui"
+             x:Class="TasCon.ViewElements.DeviceChange"
+             x:Name="me">
+
+    <Border BackgroundColor="{StaticResource NothingCardBackground}" StrokeThickness="0" WidthRequest="320" StrokeShape="RoundRectangle 10,10,10,10" Padding="12,12,12,12">
+        <Grid>
+            
+            <!-- Main Content -->
+            <HorizontalStackLayout>
+                <Label Text="{Binding Device.Address, Source={x:Reference me}, Converter={conv:RemoveLastOctett}}" FontFamily="Nothing" FontSize="18" HeightRequest="38" VerticalTextAlignment="Center" />
+                <Entry Text="{Binding LastOctett, Source={x:Reference me}}" MaxLength="3" WidthRequest="44" HeightRequest="42" VerticalTextAlignment="Center" Margin="0,2,0,0" TextChanged="Entry_TextChanged">
+                    <Entry.Style>
+                        <Style TargetType="Entry">
+                            <Setter Property="TextColor" Value="{StaticResource NothingWhite}" />
+                            <Setter Property="FontFamily" Value="Nothing" />
+                            <Setter Property="FontSize" Value="18"/>
+                            <Setter Property="IsTextPredictionEnabled" Value="False"/>
+                            <Setter Property="IsSpellCheckEnabled" Value="False"/>
+                            <Setter Property="Keyboard" Value="Numeric"/>
+                        </Style>
+                    </Entry.Style>
+                </Entry>
+            </HorizontalStackLayout>
+            <!-- # ### # -->
+            
+        </Grid>
+    </Border>
+    
+</ContentView>

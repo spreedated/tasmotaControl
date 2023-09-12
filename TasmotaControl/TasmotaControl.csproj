@@ -1,0 +1,102 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net7.0-android</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>TasCon</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>disable</ImplicitUsings>
+
+		<!-- Display name -->
+    <AssemblyTitle>Tasmota Control</AssemblyTitle>
+		<ApplicationTitle>Tasmota Control</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.nexnsystems.tascon</ApplicationId>
+		<ApplicationIdGuid>c1e326cb-6675-45ea-97fb-e6b4535cc76b</ApplicationIdGuid>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0.5</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">31.0</SupportedOSPlatformVersion>
+    <NoWarn>1701;1702;IDE0063</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#191c1e" TintColor="#FFFFFF" ForegroundScale="0.3" />
+
+		<!-- Splash Screen -->
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" TintColor="#FFFFFF" Color="#191c1e" BaseSize="128,128" />
+    
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\appicon.svg" BaseSize="256,256" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Raw\AboutMauiText.txt" />
+	  <None Remove="Resources\Raw\AboutText.txt" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="1.2.1" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="5.3.0" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="neXn.Lib">
+	    <HintPath>..\..\neXn.Library\neXn.Lib\bin\Release\net7.0\neXn.Lib.dll</HintPath>
+	  </Reference>
+	  <Reference Include="neXn.Lib.ConfigurationHandler">
+	    <HintPath>..\..\neXn.Library\neXn.Lib.ConfigurationHandler\bin\Release\net7.0\neXn.Lib.ConfigurationHandler.dll</HintPath>
+	  </Reference>
+	  <Reference Include="neXn.Lib.Exceptions">
+	    <HintPath>..\..\neXn.Library\neXn.Lib\bin\Release\net7.0\neXn.Lib.Exceptions.dll</HintPath>
+	  </Reference>
+	  <Reference Include="neXn.Lib.Maui">
+	    <HintPath>..\..\neXn.Library\neXn.Lib.Maui\bin\Release\net7.0-android\neXn.Lib.Maui.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\DeviceManager.xaml.cs">
+	    <DependentUpon>DeviceManager.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiAsset Update="Resources\Raw\AboutMauiText.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="ViewElements\DeviceChange.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\About.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\DeviceManager.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ViewElements\DeviceContent.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+	  <Exec Command="echo %25date%25 %25time%25 &gt; &quot;$(ProjectDir)\Resources\Raw\BuildDate.txt&quot;" />
+	</Target>
+
+</Project>

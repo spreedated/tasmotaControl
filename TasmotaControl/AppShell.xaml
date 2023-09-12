@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TasCon.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TasCon"
+    xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:TasCon.Views"
+    xmlns:vm="clr-namespace:TasCon.ViewModels"
+    Shell.FlyoutBehavior="Flyout"
+    BackgroundColor="{StaticResource NothingBackground}">
+
+    <Shell.BindingContext>
+        <vm:AppShellViewModel/>
+    </Shell.BindingContext>
+
+    <ShellContent
+        ContentTemplate="{DataTemplate views:MainPage}"
+        Route="MainPage">
+        <Shell.TitleView>
+            <HorizontalStackLayout VerticalOptions="Fill">
+                <Label Text="{Binding CustomTitle}" FontFamily="Nothing" TextColor="{StaticResource NothingWhite}" FontSize="Title" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+            </HorizontalStackLayout>
+        </Shell.TitleView>
+    </ShellContent>
+
+    <Shell.FlyoutHeader>
+        <HorizontalStackLayout BackgroundColor="{StaticResource NothingBackground}">
+            <HorizontalStackLayout Margin="24">
+                <Image Source="appicon.svg" MaximumWidthRequest="24">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="#FFFFFF"/>
+                    </Image.Behaviors>
+                </Image>
+
+                <Label Text="SETTINGS" FontSize="18" Margin="10,0,0,0" FontFamily="Nothing" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+            </HorizontalStackLayout>
+        </HorizontalStackLayout>
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutContent>
+        <VerticalStackLayout BackgroundColor="{StaticResource NothingBackground}">
+            <VerticalStackLayout Margin="16,24,0,0">
+
+                <HorizontalStackLayout Margin="0,0,0,12" Padding="0,8,64,8" HorizontalOptions="Start">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DeviceManagerCommand}"/>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <material:MauiIcon Icon="Devices" IconSize="16" Margin="0,0,8,0"/>
+                    <Label Text="Device Manager" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Margin="0,24,0,0" Padding="0,8,64,8" HorizontalOptions="Start">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AboutCommand}"/>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <material:MauiIcon Icon="InfoOutline" IconSize="16" Margin="0,0,8,0"/>
+                    <Label Text="About" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </Shell.FlyoutContent>
+    
+</Shell>
