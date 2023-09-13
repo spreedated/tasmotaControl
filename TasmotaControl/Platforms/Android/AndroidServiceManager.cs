@@ -10,7 +10,7 @@
             {
                 return;
             }
-            MainActivity.StartService();
+            //MainActivity.StartService();
         }
         public static void StopMyService()
         {
@@ -18,7 +18,7 @@
             {
                 return;
             }
-            MainActivity.StopService();
+            //MainActivity.StopService();
             IsRunning = false;
         }
     }

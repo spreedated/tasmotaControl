@@ -7,9 +7,9 @@ namespace TasCon.Views;
 
 public partial class Debug : ContentPage
 {
-	public Debug()
-	{
-		this.InitializeComponent();
+    public Debug()
+    {
+        this.InitializeComponent();
         ((DebugViewModel)this.BindingContext).Instance = this;
 
         using (FileStream fs = File.Open(Path.Combine(FileSystem.Current.AppDataDirectory, "config.json"), FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -19,5 +19,5 @@ public partial class Debug : ContentPage
                 ((DebugViewModel)this.BindingContext).DebugText = r.ReadToEnd();
             }
         }
-	}
+    }
 }

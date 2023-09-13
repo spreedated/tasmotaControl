@@ -27,7 +27,6 @@ public static class MauiProgram
                 fonts.AddFont("ProximaNova-Reg.otf", "ProximaNovaRegular");
                 fonts.AddFont("ProximaNova-RegIt.otf", "ProximaNovaRegularItalic");
                 fonts.AddFont("nothing-font-5x7.ttf", "Nothing");
-                fonts.AddFont("GreatVibes-Regular.ttf", "GreatVibes");
             });
 
         return builder.Build();
