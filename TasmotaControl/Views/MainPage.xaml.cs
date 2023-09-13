@@ -17,11 +17,13 @@ namespace TasCon.Views;
 
 public partial class MainPage : ContentPage
 {
+    public static MainPage StaticInstance { get; private set; }
+
     public MainPage()
     {
         this.InitializeComponent();
-
         ((MainPageViewModel)this.BindingContext).Instance = this;
+        StaticInstance = this;
 
         RequestPermissions();
 
@@ -39,16 +41,23 @@ public partial class MainPage : ContentPage
 
             ((MainPageViewModel)this.BindingContext).IsCorrectWifi = true;
 
-            foreach (TasmotaDevice device in RuntimeStorage.ConfigurationHandler.RuntimeConfiguration.Devices)
-            {
-                DeviceContent dc = new()
-                {
-                    Device = device,
-                    Margin = new Microsoft.Maui.Thickness(0, 0, 0, 12)
-                };
+            this.RefreshDeviceList();
+        }
+    }
 
-                this.DeviceLayout.Children.Add(dc);
-            }
+    public void RefreshDeviceList()
+    {
+        this.DeviceLayout.Children.Clear();
+
+        foreach (TasmotaDevice device in RuntimeStorage.ConfigurationHandler.RuntimeConfiguration.Devices.OrderBy(x => x.ViewPriority).ThenBy(y => y.Address))
+        {
+            DeviceContent dc = new()
+            {
+                Device = device,
+                Margin = new Microsoft.Maui.Thickness(0, 0, 0, 12)
+            };
+
+            this.DeviceLayout.Children.Add(dc);
         }
     }
 

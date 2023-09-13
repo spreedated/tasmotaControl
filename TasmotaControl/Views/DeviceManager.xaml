@@ -6,7 +6,8 @@
              xmlns:icon="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="TasCon.Views.DeviceManager"
-             Title="Device Manager">
+             Title="Device Manager"
+             x:Name="me">
 
     <Shell.TitleView>
         <HorizontalStackLayout VerticalOptions="Center">
@@ -15,8 +16,24 @@
         </HorizontalStackLayout>
     </Shell.TitleView>
 
-    <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" Margin="0,0,0,24">
-        <VerticalStackLayout x:Name="DeviceList" />
-    </ScrollView>
+    <Grid HorizontalOptions="CenterAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" Margin="12,0,12,0" WidthRequest="180" VerticalOptions="Start" HorizontalOptions="Start" Text="Add device" FontFamily="Nothing" FontSize="Large" Command="{Binding AddCommand, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="BackgroundColor" Value="{StaticResource NothingCardBackground}"/>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <ScrollView Grid.Row="1" Orientation="Vertical" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" Margin="0,0,0,24">
+            <VerticalStackLayout x:Name="DeviceList" />
+        </ScrollView>
+    </Grid>
+
     
 </ContentPage>

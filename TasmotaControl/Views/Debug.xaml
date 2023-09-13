@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TasCon.ViewModels"
+             xmlns:icon="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TasCon.Views.Debug"
+             Title="Debug">
+
+    <ContentPage.BindingContext>
+        <vm:DebugViewModel/>
+    </ContentPage.BindingContext>
+
+    <Shell.TitleView>
+        <HorizontalStackLayout VerticalOptions="Center">
+            <icon:MauiIcon Icon="BugReport" IconSize="24" IconColor="{StaticResource NothingGrey}" Margin="0,0,12,0" />
+            <Label Text="DEBUG" FontSize="24" FontFamily="Nothing" HorizontalTextAlignment="Center" />
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+
+    <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" Margin="0,0,0,24">
+        <VerticalStackLayout>
+            
+            <Label Text="{Binding DebugText}" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" Padding="24"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>

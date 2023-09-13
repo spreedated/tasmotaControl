@@ -12,6 +12,10 @@
              Loaded="Me_Loaded">
 
             <Border BackgroundColor="{StaticResource NothingCardBackground}" StrokeThickness="0" WidthRequest="320" StrokeShape="RoundRectangle 10,10,10,10" Padding="12,12,12,12">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer />
+                </Border.GestureRecognizers>
+                
                 <Grid>
                     <!-- Loading -->
                     <Grid IsVisible="{Binding IsFirstLoading, Source={x:Reference me}}">

@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using static TasCon.Logic.Constants;
 
@@ -14,19 +15,29 @@ namespace TasCon.Logic
         public string FriendlyName { get; private set; }
         public string Firmware { get; private set; }
         public string Hardware { get; private set; }
+        [JsonIgnore()]
         public float AnalogTemperature { get; private set; }
+        [JsonIgnore()]
         public Powerstates Powerstate { get; private set; }
+        [JsonIgnore()]
         public DateTime Refreshed { get; private set; }
         public bool IsShutter { get; set; }
         public bool HasTemperature { get; set; }
+        [JsonIgnore()]
         public Exception Failure { get; set; }
+        [JsonIgnore()]
         public int ShutterPosition { get; private set; }
+        [JsonIgnore()]
         public bool ShutterRunning { get; private set; }
+        [JsonIgnore()]
         public int ShutterDirection { get; private set; }
-
+        [JsonIgnore()]
         public DateTime Sunrise { get; private set; }
+        [JsonIgnore()]
         public DateTime Sunset { get; private set; }
+        [JsonIgnore()]
         public DateTime Localtime { get; private set; }
+        public short ViewPriority { get; set; }
 
         public enum Powerstates
         {

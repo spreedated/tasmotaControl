@@ -51,6 +51,14 @@
                     <Label Text="Device Manager" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
                 </HorizontalStackLayout>
 
+                <HorizontalStackLayout IsVisible="{Binding IsDebuggerAttached}" Margin="0,0,0,12" Padding="0,8,64,8" HorizontalOptions="Start">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DebugCommand}"/>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <material:MauiIcon Icon="BugReport" IconSize="16" Margin="0,0,8,0"/>
+                    <Label Text="Debug" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
+                </HorizontalStackLayout>
+
                 <HorizontalStackLayout Margin="0,24,0,0" Padding="0,8,64,8" HorizontalOptions="Start">
                     <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AboutCommand}"/>
