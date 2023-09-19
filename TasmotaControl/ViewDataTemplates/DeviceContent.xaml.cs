@@ -1,6 +1,7 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -14,14 +15,6 @@ public partial class DeviceContent : ContentView
     private System.Timers.Timer autoRefreshTimer;
     internal Animation RefreshAnimation;
     public bool Initializing { get; private set; } = true;
-
-    public static readonly BindableProperty DeviceProperty = BindableProperty.CreateAttached(nameof(Device), typeof(TasmotaDevice), typeof(DeviceContent), null);
-
-    public TasmotaDevice Device
-    {
-        get => (TasmotaDevice)base.GetValue(DeviceProperty);
-        set => base.SetValue(DeviceProperty, value);
-    }
 
     public ICommand ToggleCommand { get; } = new Command<ContentView>((cv) =>
     {
@@ -60,6 +53,20 @@ public partial class DeviceContent : ContentView
             });
         });
     });
+
+    private TasmotaDevice _Device;
+    public TasmotaDevice Device
+    {
+        get
+        {
+            return this._Device;
+        }
+        set
+        {
+            this._Device = value;
+            base.OnPropertyChanged(nameof(this.Device));
+        }
+    }
 
     private ContentView _Instance;
     public ContentView Instance
@@ -100,7 +107,6 @@ public partial class DeviceContent : ContentView
         {
             this._IsLoading = value;
             base.OnPropertyChanged(nameof(this.IsLoading));
-            base.OnPropertyChanged(nameof(this.IsFirstLoading));
         }
     }
 
@@ -118,14 +124,6 @@ public partial class DeviceContent : ContentView
         }
     }
 
-    public bool IsFirstLoading
-    {
-        get
-        {
-            return this.IsFirstLoad && this.IsLoading;
-        }
-    }
-
     private bool _HasError;
     public bool HasError
     {
@@ -137,7 +135,6 @@ public partial class DeviceContent : ContentView
         {
             this._HasError = value;
             base.OnPropertyChanged(nameof(this.HasError));
-            base.OnPropertyChanged(nameof(this.IsFirstLoading));
         }
     }
 
@@ -187,7 +184,7 @@ public partial class DeviceContent : ContentView
     {
         this.InitializeComponent();
         this.Instance = this;
-
+        
         this.FirstLoadingAnimation();
         this.InitializeRotationAnimation();
         this.InitializeAutoRefreshTimer();
@@ -286,7 +283,7 @@ public partial class DeviceContent : ContentView
 
             return;
         }
-
+        
         this.HasError = false;
         this.ErrorMessage = null;
 

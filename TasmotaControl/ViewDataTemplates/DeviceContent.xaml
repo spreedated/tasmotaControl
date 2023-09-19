@@ -8,133 +8,132 @@
              xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
              xmlns:ve="clr-namespace:neXn.Lib.Maui.ViewElements;assembly=neXn.Lib.Maui"
              x:Class="TasCon.ViewDataTemplates.DeviceContent"
+             x:DataType="{x:Type logic:TasmotaDevice}"
+             BindingContext="{Binding Device, Source={x:Reference me}, Mode=OneWayToSource}"
              x:Name="me"
              Loaded="Me_Loaded">
 
-            <Border BackgroundColor="{StaticResource NothingCardBackground}" StrokeThickness="0" WidthRequest="320" StrokeShape="RoundRectangle 10,10,10,10" Padding="12,12,12,12">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer />
-                </Border.GestureRecognizers>
-                
+    <Border BackgroundColor="{StaticResource NothingCardBackground}" StrokeThickness="0" WidthRequest="320" StrokeShape="RoundRectangle 10,10,10,10" Padding="12,12,12,12">
+
+            <Grid>
+                <!-- Loading -->
+                <Grid IsVisible="{Binding IsFirstLoad, Source={x:Reference me}}">
+                    <Label Text="{Binding LoadingText, Source={x:Reference me}, Mode=OneWay}" FontFamily="Nothing" FontSize="24" />
+                </Grid>
+                <!-- # ### # -->
+
+                <!-- On Error -->
+                <Grid IsVisible="{Binding HasError, Source={x:Reference me}}">
+                    <Label HorizontalTextAlignment="Center" FontFamily="Nothing" FontSize="16">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="Text">
+                                    <Setter.Value>
+                                        <MultiBinding StringFormat="{}{0}&#10;{1}">
+                                            <Binding Path="Device.Address" Source="{x:Reference me}"/>
+                                            <Binding Path="ErrorMessage" Source="{x:Reference me}"/>
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </Grid>
+                <!-- # ### # -->
+
+                <!-- Main Content -->
                 <Grid>
-                    <!-- Loading -->
-                    <Grid IsVisible="{Binding IsFirstLoading, Source={x:Reference me}}">
-                        <Label Text="{Binding LoadingText, Source={x:Reference me}, Mode=OneWay}" FontFamily="Nothing" FontSize="24" />
-                    </Grid>
-                    <!-- # ### # -->
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Setter Property="IsVisible" Value="False"/>
+                            <Style.Triggers>
+                                <MultiTrigger TargetType="Grid">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding IsFirstLoad, Source={x:Reference me}}" Value="False"/>
+                                        <BindingCondition Binding="{Binding HasError, Source={x:Reference me}}" Value="False"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="True"/>
+                                </MultiTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
 
-                    <!-- On Error -->
-                    <Grid IsVisible="{Binding HasError, Source={x:Reference me}}">
-                        <Label HorizontalTextAlignment="Center" FontFamily="Nothing" FontSize="16">
-                            <Label.Style>
-                                <Style TargetType="Label">
-                                    <Setter Property="Text">
-                                        <Setter.Value>
-                                            <MultiBinding StringFormat="{}{0}&#10;{1}">
-                                                <Binding Path="Device.Address" Source="{x:Reference me}"/>
-                                                <Binding Path="ErrorMessage" Source="{x:Reference me}"/>
-                                            </MultiBinding>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Label.Style>
+                    <material:MauiIcon x:Name="RefreshIcon" IsVisible="{Binding IsLoading, Source={x:Reference me}}" Icon="Refresh" IconColor="{StaticResource NothingGrey}" Margin="0,-18,-2,0" IconSize="32" WidthRequest="32" HeightRequest="32" HorizontalOptions="End" />
+
+                    <VerticalStackLayout Grid.Row="0">
+                        <Label Grid.Column="0" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontFamily="Nothing" FontAttributes="Bold">
+                            <Label.Text>
+                                <MultiBinding StringFormat='{}{0} ({1})'>
+                                    <Binding Path="Device.FriendlyName" Source="{x:Reference me}"/>
+                                <Binding Path="Device.DeviceName" Source="{x:Reference me}"/>
+                                </MultiBinding>
+                            </Label.Text>
                         </Label>
-                    </Grid>
-                    <!-- # ### # -->
 
-                    <!-- Main Content -->
-                    <Grid>
-                        <Grid.Style>
-                            <Style TargetType="Grid">
-                                <Setter Property="IsVisible" Value="False"/>
+                    <Label IsVisible="{Binding Device.HasTemperature, Source={x:Reference me}}" FontFamily="Nothing" Text="{Binding Device.AnalogTemperature, StringFormat='{}{0} °C', Source={x:Reference me}}" HorizontalTextAlignment="Center" TextColor="WhiteSmoke" Margin="0,6,0,0" />
+
+                        <toolkit:Expander Margin="10,10,0,0" IsExpanded="{Binding IsExpandedInformation,Source={x:Reference me}, Mode=OneWayToSource}">
+                            <toolkit:Expander.Header>
+                                <HorizontalStackLayout>
+                                    <material:MauiIcon Margin="0,0,2,0" IsVisible="{Binding IsExpandedInformation,Source={x:Reference me}, Converter={nconv:BoolReverseConverter}}" IconColor="{StaticResource NothingGrey}" Icon="ChevronRight" IconSize="16"/>
+                                    <material:MauiIcon Margin="0,0,2,0" IsVisible="{Binding IsExpandedInformation,Source={x:Reference me}}" IconColor="{StaticResource NothingGrey}" Icon="ExpandMore" IconSize="16"/>
+                                    <Label Text="INFORMATION" TextColor="{StaticResource NothingGrey}" FontFamily="Nothing" Margin="0,0,2,0"/>
+                                </HorizontalStackLayout>
+                            </toolkit:Expander.Header>
+
+                            <VerticalStackLayout Padding="10">
+                                <Label HorizontalTextAlignment="Center" Text="{Binding Firmware, StringFormat='Firmware: {0}'}" FontFamily="ProximaNovaRegular"/>
+                                <Label HorizontalTextAlignment="Center" Text="{Binding Hardware, StringFormat='Hardware: {0}'}" FontFamily="ProximaNovaRegular"/>
+                            </VerticalStackLayout>
+                        </toolkit:Expander>
+
+                    </VerticalStackLayout>
+
+                <Button Grid.Row="1" IsVisible="{Binding IsShutter, Converter={nconv:BoolReverseConverter}}" Margin="0,16,0,0" WidthRequest="64" Text="{Binding Device.Powerstate, Source={x:Reference me}}" Command="{Binding ToggleCommand, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}" HorizontalOptions="Center">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="BackgroundColor" Value="DarkGreen"/>
+                                <Setter Property="TextTransform" Value="Uppercase"/>
+                                <Setter Property="FontFamily" Value="Nothing"/>
+                                <Setter Property="FontAttributes" Value="Bold"/>
                                 <Style.Triggers>
-                                    <MultiTrigger TargetType="Grid">
-                                        <MultiTrigger.Conditions>
-                                            <BindingCondition Binding="{Binding IsFirstLoading, Source={x:Reference me}}" Value="False"/>
-                                            <BindingCondition Binding="{Binding HasError, Source={x:Reference me}}" Value="False"/>
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="IsVisible" Value="True"/>
-                                    </MultiTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding Device.Powerstate,Source={x:Reference me}}" Value="{x:Static logic:TasmotaDevice+Powerstates.Off}">
+                                        <Setter Property="BackgroundColor" Value="DarkRed"/>
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </Grid.Style>
+                        </Button.Style>
+                    </Button>
+
+                    <Grid Grid.Row="1" IsVisible="{Binding IsShutter}" Margin="0,8,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="240"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <material:MauiIcon x:Name="RefreshIcon" IsVisible="{Binding IsLoading, Source={x:Reference me}}" Icon="Refresh" IconColor="{StaticResource NothingGrey}" Margin="0,-18,-2,0" IconSize="32" WidthRequest="32" HeightRequest="32" HorizontalOptions="End" />
-
-                        <VerticalStackLayout Grid.Row="0">
-                            <Label Grid.Column="0" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontFamily="Nothing" FontAttributes="Bold">
-                                <Label.Text>
-                                    <MultiBinding StringFormat='{}{0} ({1})'>
-                                        <Binding Path="Device.FriendlyName" Source="{x:Reference me}"/>
-                                        <Binding Path="Device.DeviceName" Source="{x:Reference me}"/>
-                                    </MultiBinding>
-                                </Label.Text>
-                            </Label>
-
-                            <Label IsVisible="{Binding Device.HasTemperature, Source={x:Reference me}}" FontFamily="Nothing" Text="{Binding Device.AnalogTemperature, Source={x:Reference me}, StringFormat='{}{0} °C'}" HorizontalTextAlignment="Center" TextColor="WhiteSmoke" Margin="0,6,0,0" />
-
-                            <toolkit:Expander Margin="10,10,0,0" IsExpanded="{Binding IsExpandedInformation,Source={x:Reference me}, Mode=OneWayToSource}">
-                                <toolkit:Expander.Header>
-                                    <HorizontalStackLayout>
-                                        <material:MauiIcon Margin="0,0,2,0" IsVisible="{Binding IsExpandedInformation,Source={x:Reference me}, Converter={nconv:BoolReverseConverter}}" IconColor="{StaticResource NothingGrey}" Icon="ChevronRight" IconSize="16"/>
-                                        <material:MauiIcon Margin="0,0,2,0" IsVisible="{Binding IsExpandedInformation,Source={x:Reference me}}" IconColor="{StaticResource NothingGrey}" Icon="ExpandMore" IconSize="16"/>
-                                        <Label Text="INFORMATION" TextColor="{StaticResource NothingGrey}" FontFamily="Nothing" Margin="0,0,2,0"/>
-                                    </HorizontalStackLayout>
-                                </toolkit:Expander.Header>
-
-                                <VerticalStackLayout Padding="10">
-                                    <Label HorizontalTextAlignment="Center" Text="{Binding Device.Firmware, Source={x:Reference me}, StringFormat='Firmware: {0}'}" FontFamily="ProximaNovaRegular"/>
-                                    <Label HorizontalTextAlignment="Center" Text="{Binding Device.Hardware, Source={x:Reference me}, StringFormat='Hardware: {0}'}" FontFamily="ProximaNovaRegular"/>
-                                </VerticalStackLayout>
-                            </toolkit:Expander>
-
-                        </VerticalStackLayout>
-
-                        <Button Grid.Row="1" IsVisible="{Binding Device.IsShutter, Source={x:Reference me}, Converter={nconv:BoolReverseConverter}}" Margin="0,16,0,0" WidthRequest="64" Text="{Binding Device.Powerstate, Source={x:Reference me}}" Command="{Binding ToggleCommand, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}" HorizontalOptions="Center">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="BackgroundColor" Value="DarkGreen"/>
-                                    <Setter Property="TextTransform" Value="Uppercase"/>
-                                    <Setter Property="FontFamily" Value="Nothing"/>
-                                    <Setter Property="FontAttributes" Value="Bold"/>
-                                    <Style.Triggers>
-                                        <DataTrigger TargetType="Button" Binding="{Binding Device.Powerstate, Source={x:Reference me}}" Value="{x:Static logic:TasmotaDevice+Powerstates.Off}">
-                                            <Setter Property="BackgroundColor" Value="DarkRed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-
-                        <Grid Grid.Row="1" IsVisible="{Binding Device.IsShutter, Source={x:Reference me}}" Margin="0,8,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="240"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Grid Grid.Column="0" Grid.Row="0">
-                                <material:MauiIcon Icon="RollerShadesClosed" IconColor="{StaticResource NothingGrey}" IconSize="16" Margin="18,0,0,0"/>
-                                <material:MauiIcon HorizontalOptions="End" Icon="RollerShades" IconColor="{StaticResource NothingGrey}" IconSize="16" Margin="0,0,18,0"/>
-                            </Grid>
-
-                            <Slider Grid.Column="0" Grid.Row="1" Maximum="100" Minimum="0" Value="{Binding ShutterValue, Source={x:Reference me}, Mode=TwoWay}" Margin="0,0,0,0" HeightRequest="32">
-                                <Slider.Behaviors>
-                                    <toolkit:EventToCommandBehavior EventName="DragCompleted" Command="{Binding ShutterSliderDragCompletedCommand, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}" />
-                                </Slider.Behaviors>
-                            </Slider>
-                            <Label Grid.Column="1" Grid.Row="1" FontFamily="Nothing" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" WidthRequest="48" Text="{Binding ShutterValue,Source={x:Reference me}, Mode=OneWay, StringFormat='{}{0} %'}"/>
+                        <Grid Grid.Column="0" Grid.Row="0">
+                            <material:MauiIcon Icon="RollerShadesClosed" IconColor="{StaticResource NothingGrey}" IconSize="16" Margin="18,0,0,0"/>
+                            <material:MauiIcon HorizontalOptions="End" Icon="RollerShades" IconColor="{StaticResource NothingGrey}" IconSize="16" Margin="0,0,18,0"/>
                         </Grid>
+
+                        <Slider Grid.Column="0" Grid.Row="1" Maximum="100" Minimum="0" Value="{Binding ShutterValue, Source={x:Reference me}, Mode=TwoWay}" Margin="0,0,0,0" HeightRequest="32">
+                            <Slider.Behaviors>
+                                <toolkit:EventToCommandBehavior EventName="DragCompleted" Command="{Binding ShutterSliderDragCompletedCommand, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}" />
+                            </Slider.Behaviors>
+                        </Slider>
+                        <Label Grid.Column="1" Grid.Row="1" FontFamily="Nothing" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" WidthRequest="48" Text="{Binding ShutterValue,Source={x:Reference me}, Mode=OneWay, StringFormat='{}{0} %'}"/>
                     </Grid>
-                    <!-- # ### # -->
                 </Grid>
-            </Border>
+                <!-- # ### # -->
+            </Grid>
+        </Border>
 
 </ContentView>

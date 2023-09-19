@@ -5,14 +5,19 @@
              xmlns:vm="clr-namespace:TasCon.ViewModels"
              xmlns:icon="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:dx="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+             xmlns:cv="clr-namespace:neXn.Lib.Maui.ViewLogic.Converters;assembly=neXn.Lib.Maui"
+             xmlns:dd="clr-namespace:TasCon.ViewDataTemplates"
+             xmlns:strings="clr-namespace:TasCon.Resources.Strings"
              x:Class="TasCon.Views.DeviceManager"
-             Title="Device Manager"
+             Title="{x:Static strings:AppStrings.DEVICE_MANAGER}"
              x:Name="me">
 
     <Shell.TitleView>
         <HorizontalStackLayout VerticalOptions="Center">
             <icon:MauiIcon Icon="Devices" IconSize="24" IconColor="{StaticResource NothingGrey}" Margin="0,0,12,0" />
-            <Label Text="DEVICE MANAGER" FontSize="24" FontFamily="Nothing" HorizontalTextAlignment="Center" />
+            <Label Text="{x:Static strings:AppStrings.DEVICE_MANAGER}" TextTransform="Uppercase" FontSize="24" FontFamily="Nothing" HorizontalTextAlignment="Center" />
         </HorizontalStackLayout>
     </Shell.TitleView>
 
@@ -22,17 +27,41 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Margin="12,0,12,0" WidthRequest="180" VerticalOptions="Start" HorizontalOptions="Start" Text="Add device" FontFamily="Nothing" FontSize="Large" Command="{Binding AddCommand, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="BackgroundColor" Value="{StaticResource NothingCardBackground}"/>
-                </Style>
-            </Button.Style>
-        </Button>
+        <HorizontalStackLayout Grid.Row="0" Margin="12,0,12,0">
+            <Button Grid.Row="0" Margin="12,0,12,0" VerticalOptions="Start" Text="Add device" Command="{Binding AddCommand, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}"/>
+        </HorizontalStackLayout>
 
-        <ScrollView Grid.Row="1" Orientation="Vertical" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" Margin="0,0,0,24">
-            <VerticalStackLayout x:Name="DeviceList" />
-        </ScrollView>
+        <dx:ShimmerView Grid.Row="1" IsLoading="{Binding IsLoading, Source={x:Reference me}, Mode=OneWay}" HorizontalOptions="CenterAndExpand">
+            <dx:ShimmerView.LoadingView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="144"/>
+                        <RowDefinition Height="144"/>
+                        <RowDefinition Height="144"/>
+                        <RowDefinition Height="144"/>
+                    </Grid.RowDefinitions>
+                    <RoundRectangle Grid.Row="0" Fill="{StaticResource NothingCardBackground}" HeightRequest="128" CornerRadius="10" Margin="24" />
+                    <RoundRectangle Grid.Row="1" Fill="{StaticResource NothingCardBackground}" HeightRequest="128" CornerRadius="10" Margin="24" />
+                    <RoundRectangle Grid.Row="2" Fill="{StaticResource NothingCardBackground}" HeightRequest="128" CornerRadius="10" Margin="24" />
+                    <RoundRectangle Grid.Row="3" Fill="{StaticResource NothingCardBackground}" HeightRequest="128" CornerRadius="10" Margin="24" />
+                </Grid>
+            </dx:ShimmerView.LoadingView>
+        </dx:ShimmerView>
+
+        <dxcv:DXCollectionView x:Name="TasmotaDeviceCollection" Grid.Row="1" AllowDragDropItems="True" IsVisible="{Binding IsLoading, Source={x:Reference me}, Mode=OneWay, Converter={cv:BoolReverseConverter}}"
+                               ItemsSource="{Binding ThisDevices, Source={x:Reference me}}">
+            
+            <dxcv:DXCollectionView.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="CompleteItemDragDrop" Command="{Binding SetViewPriority, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}"/>
+            </dxcv:DXCollectionView.Behaviors>
+            
+            <dxcv:DXCollectionView.ItemTemplate>
+                <DataTemplate>
+                    <dd:DeviceChange Margin="6"/>
+                </DataTemplate>
+            </dxcv:DXCollectionView.ItemTemplate>
+            
+        </dxcv:DXCollectionView>
     </Grid>
 
     

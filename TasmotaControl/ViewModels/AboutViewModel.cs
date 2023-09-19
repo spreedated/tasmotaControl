@@ -55,35 +55,38 @@ namespace TasCon.ViewModels
                 }
             }
 
-            DateTime builddate = await GetBuilddate();
+            DateTime builddate = GetBuildDate(typeof(AboutViewModel).Assembly);
+
             Assembly a = this.GetType().Assembly;
 
             using (Stream stream = await FileSystem.OpenAppPackageFileAsync("AboutMauiText.txt"))
             {
                 using (StreamReader reader = new(stream))
                 {
-                    this.MauiText = string.Format(reader.ReadToEnd(), a.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkDisplayName, builddate == default ? "unavailable" : builddate, a.GetName().Version.ToNiceString());
+                    this.MauiText = string.Format(reader.ReadToEnd(), a.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkDisplayName, builddate == default ? "N/A" : builddate, a.GetName().Version.ToNiceString());
                 }
             }
         }
 
-        private static async Task<DateTime> GetBuilddate()
+        private static DateTime GetBuildDate(Assembly assembly)
         {
-            using (Stream stream = await FileSystem.OpenAppPackageFileAsync("BuildDate.txt"))
+            const string BuildVersionMetadataPrefix = "+build";
+
+            AssemblyInformationalVersionAttribute attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (attribute?.InformationalVersion != null)
             {
-                if (stream == null)
+                string value = attribute.InformationalVersion;
+                int index = value.IndexOf(BuildVersionMetadataPrefix);
+                if (index > 0)
                 {
-                    return default;
-                }
-
-                using (StreamReader reader = new(stream))
-                {
-                    string commandBuilddate = reader.ReadToEnd();
-
-                    DateTime.TryParse(commandBuilddate[..commandBuilddate.IndexOf(',')], CultureInfo.CurrentCulture, out DateTime bdate);
-                    return bdate;
+                    value = value[(index + BuildVersionMetadataPrefix.Length)..];
+                    if (DateTime.TryParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result))
+                    {
+                        return result;
+                    }
                 }
             }
+            return default;
         }
     }
 }

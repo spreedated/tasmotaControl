@@ -2,6 +2,8 @@
 using neXn.Lib.Maui.ViewLogic;
 using System.Windows.Input;
 using TasCon.Views;
+using TasCon.Logic;
+using System.Collections.ObjectModel;
 
 namespace TasCon.ViewModels
 {
@@ -12,6 +14,20 @@ namespace TasCon.ViewModels
             await ((MainPage)c).RefreshDevices();
             ((MainPageViewModel)c.BindingContext).IsRefreshing = false;
         });
+
+        private ObservableCollection<TasmotaDevice> _ThisDevices;
+        public ObservableCollection<TasmotaDevice> ThisDevices
+        {
+            get
+            {
+                return this._ThisDevices;
+            }
+            set
+            {
+                this._ThisDevices = value;
+                base.OnPropertyChanged(nameof(this.ThisDevices));
+            }
+        }
 
         private ContentPage _Instance;
         public ContentPage Instance

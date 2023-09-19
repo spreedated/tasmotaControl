@@ -7,6 +7,8 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:rstorage="clr-namespace:TasCon.Logic"
              xmlns:ve="clr-namespace:neXn.Lib.Maui.ViewElements;assembly=neXn.Lib.Maui"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+             xmlns:vdt="clr-namespace:TasCon.ViewDataTemplates"
              x:Class="TasCon.Views.MainPage"
              NavigationPage.HasNavigationBar="False">
 
@@ -34,9 +36,15 @@
                     </Style.Triggers>
                 </Style>
             </ve:RefreshViewFix.Style>
-            <ScrollView x:Name="ScrollView">
-                <StackLayout x:Name="DeviceLayout" />
-            </ScrollView>
+
+            <dxcv:DXCollectionView x:Name="CollectionView" ItemsSource="{Binding ThisDevices}">
+                <dxcv:DXCollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <vdt:DeviceContent Margin="0,0,0,12"/>
+                    </DataTemplate>
+                </dxcv:DXCollectionView.ItemTemplate>
+            </dxcv:DXCollectionView>
+            
         </ve:RefreshViewFix>
 
         <Grid IsVisible="{Binding NoPermission}">

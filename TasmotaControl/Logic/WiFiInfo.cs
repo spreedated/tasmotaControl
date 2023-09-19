@@ -5,18 +5,13 @@ using Android.Net.Wifi;
 using System;
 using System.Linq;
 using System.Net;
+using TasCon.Models;
 
 namespace TasCon.Logic
 {
     public static class WiFiInfo
     {
-        public class WifiInfoResponse
-        {
-            public string Ssid { get; internal set; }
-            public IPAddress IpAddress { get; internal set; }
-        }
-
-        public static WifiInfoResponse GetCurrentWiFi()
+        public static WiFiInformation GetCurrentWiFi()
         {
             WifiManager ww = (WifiManager)Application.Context.GetSystemService("wifi");
 

@@ -14,7 +14,7 @@ namespace TasCon.Logic
     {
         public static CorrectWiFiResponse IsCorrectWifi()
         {
-            WiFiInfo.WifiInfoResponse w = WiFiInfo.GetCurrentWiFi();
+            WiFiInformation w = WiFiInfo.GetCurrentWiFi();
 
             if (!typeof(Constants).GetFields(BindingFlags.Public | BindingFlags.Static).Where(x => x.Name.ToLower().StartsWith("allowed_wifi")).Select(y => y.GetValue(null).ToString()).Contains(w.Ssid))
             {

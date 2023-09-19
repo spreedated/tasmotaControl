@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TasCon.Logic;
 using TasCon.Platforms.Android;
-using TasCon.ViewElements;
+using TasCon.ViewDataTemplates;
 using TasCon.ViewModels;
 using static TasCon.Logic.HelperFunctions;
 
@@ -33,35 +33,29 @@ public partial class MainPage : ContentPage
 
     public void RefreshDeviceList()
     {
-        this.DeviceLayout.Children.Clear();
-
         this.RefreshWiFiInfo();
 
         if (((MainPageViewModel)this.BindingContext).IsCorrectWifi)
         {
-            foreach (TasmotaDevice device in RuntimeStorage.ConfigurationHandler.RuntimeConfiguration.Devices.OrderBy(x => x.ViewPriority).ThenBy(y => y.Address))
-            {
-                DeviceContent dc = new()
-                {
-                    Device = device,
-                    Margin = new Microsoft.Maui.Thickness(0, 0, 0, 12)
-                };
-
-                this.DeviceLayout.Children.Add(dc);
-            }
+            ((MainPageViewModel)this.BindingContext).ThisDevices = new(RuntimeStorage.ConfigurationHandler.RuntimeConfiguration.Devices.OrderBy(x => x.ViewPriority).ThenBy(y => y.Address).Take(3));
         }
     }
 
     public async Task RefreshDevices()
     {
-        List<Task> deviceRefreshing = new();
+        var ss = this.CollectionView.BindingContext;
 
-        foreach (DeviceContent dc in this.DeviceLayout.Children.Where(y => y.GetType() == typeof(DeviceContent)).Select(x => (DeviceContent)x))
-        {
-            deviceRefreshing.Add(Task.Factory.StartNew(async () => await dc.DeviceRefresh()));
-        }
+        //List<Task> deviceRefreshing = new();
 
-        await Task.WhenAll(deviceRefreshing);
+        //foreach (DeviceContent dc in )
+        //{
+        //    deviceRefreshing.Add(Task.Factory.StartNew(async () => await dc.DeviceRefresh()));
+        //}
+
+        //await Task.WhenAll(deviceRefreshing);
+        
+        this.RefreshDeviceList();
+        this.CollectionView.RefreshData();
     }
 
     private void RefreshWiFiInfo()

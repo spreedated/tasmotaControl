@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using DevExpress.Maui;
 using MauiIcons.Material;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Hosting;
@@ -18,6 +19,7 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .UseMaterialMauiIcons()
+            .UseDevExpress()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("ProximaNova-BlackIt.otf", "ProximaNovaBlackItalic");
