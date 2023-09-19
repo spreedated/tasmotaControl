@@ -8,6 +8,7 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:views="clr-namespace:TasCon.Views"
     xmlns:vm="clr-namespace:TasCon.ViewModels"
+    xmlns:strings="clr-namespace:TasCon.Resources.Strings"
     Shell.FlyoutBehavior="Flyout"
     BackgroundColor="{StaticResource NothingBackground}">
 
@@ -34,7 +35,7 @@
                     </Image.Behaviors>
                 </Image>
 
-                <Label Text="SETTINGS" FontSize="18" Margin="10,0,0,0" FontFamily="Nothing" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                <Label Text="{x:Static strings:AppStrings.SETTINGS}" TextTransform="Uppercase" FontSize="18" Margin="10,0,0,0" FontFamily="Nothing" FontAttributes="Bold" VerticalTextAlignment="Center"/>
             </HorizontalStackLayout>
         </HorizontalStackLayout>
     </Shell.FlyoutHeader>
@@ -48,7 +49,7 @@
                         <TapGestureRecognizer Command="{Binding DeviceManagerCommand}"/>
                     </HorizontalStackLayout.GestureRecognizers>
                     <material:MauiIcon Icon="Devices" IconSize="16" Margin="0,0,8,0"/>
-                    <Label Text="Device Manager" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
+                    <Label Text="{x:Static strings:AppStrings.DEVICE_MANAGER}" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout IsVisible="{Binding IsDebuggerAttached}" Margin="0,0,0,12" Padding="0,8,64,8" HorizontalOptions="Start">
@@ -64,7 +65,7 @@
                         <TapGestureRecognizer Command="{Binding AboutCommand}"/>
                     </HorizontalStackLayout.GestureRecognizers>
                     <material:MauiIcon Icon="InfoOutline" IconSize="16" Margin="0,0,8,0"/>
-                    <Label Text="About" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
+                    <Label Text="{x:Static strings:AppStrings.ABOUT}" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
                 </HorizontalStackLayout>
 
             </VerticalStackLayout>
