@@ -7,7 +7,7 @@ using System.Timers;
 using System.Windows.Input;
 using TasCon.Logic;
 
-namespace TasCon.ViewElements;
+namespace TasCon.ViewDataTemplates;
 
 public partial class DeviceContent : ContentView
 {
