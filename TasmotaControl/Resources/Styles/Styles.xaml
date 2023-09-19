@@ -3,7 +3,8 @@
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dxeditor="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors">
 
     <Style TargetType="material:MauiIcon">
         <Setter Property="IconColor" Value="{StaticResource NothingGrey}"/>
@@ -30,9 +31,9 @@
 
     <Style TargetType="Button">
         <Setter Property="TextColor" Value="{StaticResource NothingWhite}" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
-        <Setter Property="FontFamily" Value="ProximaNovaRegular"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource NothingCardBackground}" />
+        <Setter Property="FontFamily" Value="Nothing"/>
+        <Setter Property="FontSize" Value="18"/>
         <Setter Property="CornerRadius" Value="8"/>
         <Setter Property="Padding" Value="14,10"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -384,6 +385,14 @@
         <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
         <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+    <Style TargetType="dxeditor:CheckEdit">
+        <Setter Property="CheckBoxColor" Value="{StaticResource NothingGrey}"/>
+        <Setter Property="CheckedCheckBoxColor" Value="{StaticResource NothingGrey}"/>
+        <Setter Property="LabelFontFamily" Value="Nothing"/>
+        <Setter Property="LabelColor" Value="{StaticResource NothingWhite}"/>
+        <Setter Property="LabelFontSize" Value="16"/>
     </Style>
 
 </ResourceDictionary>
