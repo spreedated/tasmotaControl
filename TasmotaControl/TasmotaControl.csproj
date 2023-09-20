@@ -131,6 +131,9 @@
 	  <MauiXaml Update="ViewDataTemplates\DeviceChange.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="ViewElements\DividerBar.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\About.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -143,10 +146,6 @@
 	  <MauiXaml Update="ViewDataTemplates\DeviceContent.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ViewElements\" />
 	</ItemGroup>
 
 </Project>

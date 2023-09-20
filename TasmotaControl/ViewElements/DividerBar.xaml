@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasCon.ViewElements.DividerBar">
+
+    <Border Padding="-5,0,-5,0" HorizontalOptions="CenterAndExpand" StrokeThickness="0" BackgroundColor="Transparent">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="4" />
+        </Border.StrokeShape>
+
+        <HorizontalStackLayout >
+            <VerticalStackLayout>
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="Transparent" />
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="#777700" />
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="Black" />
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="#777700" />
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="Black" />
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="Transparent" />
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="Transparent" />
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="#777700" />
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="Black" />
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="#777700" />
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="Black" />
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="Transparent" />
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="Transparent" />
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="#777700" />
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="Black" />
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="#777700" />
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="Black" />
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="Transparent" />
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="Transparent" />
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="#777700" />
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="Black" />
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="#777700" />
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="Black" />
+                <Rectangle WidthRequest="24" HeightRequest="12" BackgroundColor="Transparent" />
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="Transparent" />
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="#777700" />
+                <Rectangle WidthRequest="36" HeightRequest="12" BackgroundColor="Black" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+    </Border>
+    
+</ContentView>

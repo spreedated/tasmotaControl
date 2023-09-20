@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TasCon.ViewModels"
+             xmlns:ve="clr-namespace:TasCon.ViewElements"
              xmlns:icon="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="TasCon.Views.About"
@@ -21,9 +22,9 @@
     <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" Margin="0,0,0,24">
         <VerticalStackLayout>
             <Label Text="{Binding AboutText}" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" Padding="24"/>
-            
-            <Label Text="---" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" Padding="0,0,0,12"/>
-            
+
+            <ve:DividerBar Margin="0,0,0,12" />
+
             <Label Text="Works with:" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" />
 
             <VerticalStackLayout>
@@ -34,7 +35,7 @@
                 </Image>
             </VerticalStackLayout>
 
-            <Label Text="---" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" Padding="0,0,0,12"/>
+            <ve:DividerBar Margin="0,12,0,12" />
 
             <Label Text="Powered by:" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" />
 
