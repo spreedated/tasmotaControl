@@ -26,6 +26,48 @@ namespace TasCon.ViewModels
             }
         }
 
+        private string _NxLibraryVersion;
+        public string NxLibraryVersion
+        {
+            get
+            {
+                return this._NxLibraryVersion;
+            }
+            set
+            {
+                this._NxLibraryVersion = value;
+                base.OnPropertyChanged(nameof(this.NxLibraryVersion));
+            }
+        }
+
+        private string _NxLibraryConfigVersion;
+        public string NxLibraryConfigVersion
+        {
+            get
+            {
+                return this._NxLibraryConfigVersion;
+            }
+            set
+            {
+                this._NxLibraryConfigVersion = value;
+                base.OnPropertyChanged(nameof(this.NxLibraryConfigVersion));
+            }
+        }
+
+        private string _NxLibraryMauiVersion;
+        public string NxLibraryMauiVersion
+        {
+            get
+            {
+                return this._NxLibraryMauiVersion;
+            }
+            set
+            {
+                this._NxLibraryMauiVersion = value;
+                base.OnPropertyChanged(nameof(this.NxLibraryMauiVersion));
+            }
+        }
+
         private string _MauiText;
         public string MauiText
         {
@@ -66,6 +108,10 @@ namespace TasCon.ViewModels
                     this.MauiText = string.Format(reader.ReadToEnd(), a.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkDisplayName, builddate == default ? "N/A" : builddate, a.GetName().Version.ToNiceString());
                 }
             }
+
+            this.NxLibraryVersion = $"neXn.Lib {typeof(neXn.Lib.Strings.Common).Assembly.GetName().Version.ToNiceString()}";
+            this.NxLibraryConfigVersion = $"neXn.Lib.ConfigurationHandler {typeof(neXn.Lib.ConfigurationHandler.Models.CongfigurationHandlerOptions).Assembly.GetName().Version.ToNiceString()}";
+            this.NxLibraryMauiVersion = $"neXn.Lib.Maui {typeof(neXn.Lib.Maui.ViewElements.RefreshViewFix).Assembly.GetName().Version.ToNiceString()}";
         }
 
         private static DateTime GetBuildDate(Assembly assembly)

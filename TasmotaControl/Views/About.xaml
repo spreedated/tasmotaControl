@@ -5,6 +5,7 @@
              xmlns:ve="clr-namespace:TasCon.ViewElements"
              xmlns:icon="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:strings="clr-namespace:TasCon.Resources.Strings"
              x:Class="TasCon.Views.About"
              Title="About">
 
@@ -15,15 +16,15 @@
     <Shell.TitleView>
         <HorizontalStackLayout VerticalOptions="Center">
             <icon:MauiIcon Icon="InfoOutline" IconSize="24" IconColor="{StaticResource NothingGrey}" Margin="0,0,12,0" />
-            <Label Text="ABOUT" FontSize="24" FontFamily="Nothing" HorizontalTextAlignment="Center" />
+            <Label Text="{x:Static strings:AppStrings.ABOUT}" TextTransform="Uppercase" FontSize="24" FontFamily="Nothing" HorizontalTextAlignment="Center" />
         </HorizontalStackLayout>
     </Shell.TitleView>
 
-    <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" Margin="0,0,0,24">
+    <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" Padding="0,0,0,24">
         <VerticalStackLayout>
             <Label Text="{Binding AboutText}" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" Padding="24"/>
 
-            <ve:DividerBar Margin="0,0,0,12" />
+            <ve:DividerBar Margin="0,0,0,12"/>
 
             <Label Text="Works with:" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" />
 
@@ -35,7 +36,7 @@
                 </Image>
             </VerticalStackLayout>
 
-            <ve:DividerBar Margin="0,12,0,12" />
+            <ve:DividerBar Margin="0,12,0,12"/>
 
             <Label Text="Powered by:" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" />
 
@@ -47,6 +48,31 @@
                 </Image>
                 <Label Text="{Binding MauiText}" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
+
+            <ve:DividerBar Margin="0,12,0,12"/>
+            
+            <Label Text="Powered by:" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" />
+            
+            <Grid>
+                <Image Source="nexn_logo_black.svg" WidthRequest="180" HeightRequest="180">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="{StaticResource NothingGrey}"/>
+                    </Image.Behaviors>
+                </Image>
+                <Image Source="nexn_logo_green.svg" WidthRequest="180" HeightRequest="180" />
+            </Grid>
+            
+            <Label Text="neXn-Systems Library&#10;&#10;Written by&#10;Markus Karl Wackermann" FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center" Margin="0,0,0,12"/>
+
+            <Label FontSize="12" FontFamily="Nothing" HorizontalTextAlignment="Center">
+                <Label.Text>
+                    <MultiBinding StringFormat="{}{0}&#10;{1}&#10;{2}">
+                        <Binding Path="NxLibraryVersion" />
+                        <Binding Path="NxLibraryConfigVersion" />
+                        <Binding Path="NxLibraryMauiVersion" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
 
         </VerticalStackLayout>
     </ScrollView>

@@ -7,12 +7,3 @@ Built against
 {1}
 
 Application Version {2}
-
----
-
-Using
-
-neXn-Systems Library
-
-written by
-Markus Karl Wackermann
