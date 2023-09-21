@@ -93,7 +93,7 @@
 
                     </VerticalStackLayout>
 
-                <Button Grid.Row="1" IsVisible="{Binding IsShutter, Converter={nconv:BoolReverseConverter}}" Margin="0,16,0,0" WidthRequest="64" Text="{Binding Device.Powerstate, Source={x:Reference me}}" Command="{Binding ToggleCommand, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}" HorizontalOptions="Center">
+                <Button Grid.Row="1" IsVisible="{Binding IsShutter, Converter={nconv:BoolReverseConverter}}" Margin="0,16,0,0" WidthRequest="72" Text="{Binding Device.Powerstate, Source={x:Reference me}}" Command="{Binding ToggleCommand, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}" HorizontalOptions="Center">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="BackgroundColor" Value="DarkGreen"/>
