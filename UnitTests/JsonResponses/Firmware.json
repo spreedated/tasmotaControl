@@ -1,0 +1,11 @@
+﻿{
+  "StatusFWR": {
+    "Version": "12.5.0(nspanel)",
+    "BuildDateTime": "2023-04-17T08:07:02",
+    "Core": "2_0_7",
+    "SDK": "4.4.4.20230218",
+    "CpuFrequency": 160,
+    "Hardware": "ESP32-D0WD-V3 rev.3",
+    "CR": "450/699"
+  }
+}

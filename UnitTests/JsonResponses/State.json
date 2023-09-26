@@ -1,0 +1,27 @@
+﻿{
+  "Time": "2023-09-20T13:34:48",
+  "Uptime": "26T20:14:26",
+  "UptimeSec": 2319266,
+  "Heap": 121,
+  "SleepMode": "Dynamic",
+  "Sleep": 50,
+  "LoadAvg": 20,
+  "MqttCount": 0,
+  "Berry": {
+    "HeapUsed": 22,
+    "Objects": 452
+  },
+  "POWER1": "OFF",
+  "POWER2": "OFF",
+  "Wifi": {
+    "AP": 1,
+    "SSId": "nxn-fritz",
+    "BSSId": "3C:A6:2F:BB:37:AA",
+    "Channel": 1,
+    "Mode": "11n",
+    "RSSI": 100,
+    "Signal": -45,
+    "LinkCount": 58,
+    "Downtime": "0T00:13:31"
+  }
+}
