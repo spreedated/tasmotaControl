@@ -37,6 +37,8 @@ namespace TasCon.Logic
         public DateTime Sunset { get; private set; }
         [JsonIgnore()]
         public DateTime Localtime { get; private set; }
+        [JsonIgnore()]
+        public bool IsBusy { get; set; }
         public short ViewPriority { get; set; }
 
         public enum Powerstates
@@ -85,6 +87,8 @@ namespace TasCon.Logic
 
         public async Task RefreshStatus()
         {
+            this.IsBusy = true;
+
             try
             {
                 JObject jo = null;
@@ -140,6 +144,7 @@ namespace TasCon.Logic
             {
                 this.Failure = new TimeoutException("Device unavailable", ex);
             }
+            this.IsBusy = false;
         }
 
         /// <summary>
@@ -149,6 +154,8 @@ namespace TasCon.Logic
         /// <returns></returns>
         public async Task RefreshStatus2()
         {
+            this.IsBusy = true;
+
             JObject jo = null;
 
             using (HttpClient hc = new())
@@ -161,6 +168,8 @@ namespace TasCon.Logic
 
             this.Firmware = jo["StatusFWR"]["Version"]?.ToObject<string>();
             this.Hardware = jo["StatusFWR"]["Hardware"]?.ToObject<string>();
+
+            this.IsBusy = false;
         }
 
         /// <summary>
@@ -170,6 +179,8 @@ namespace TasCon.Logic
         /// <returns></returns>
         public async Task RefreshStatus7()
         {
+            this.IsBusy = true;
+
             JObject jo = null;
 
             using (HttpClient hc = new())
@@ -183,6 +194,8 @@ namespace TasCon.Logic
             this.Sunrise = jo["StatusTIM"]["Sunrise"].ToObject<DateTime>();
             this.Sunset = jo["StatusTIM"]["Sunset"].ToObject<DateTime>();
             this.Localtime = jo["StatusTIM"]["Local"].ToObject<DateTime>();
+
+            this.IsBusy = false;
         }
 
         /// <summary>
@@ -192,6 +205,8 @@ namespace TasCon.Logic
         /// <returns></returns>
         public async Task RefreshStatus10()
         {
+            this.IsBusy = true;
+
             JObject jo = null;
 
             using (HttpClient hc = new())
@@ -208,6 +223,8 @@ namespace TasCon.Logic
             {
                 this.AnalogTemperature = temp.ToObject<float>();
             }
+
+            this.IsBusy = false;
         }
     }
 }

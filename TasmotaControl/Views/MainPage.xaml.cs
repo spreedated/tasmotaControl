@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using DevExpress.Maui.Core.Internal;
+using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,8 +44,6 @@ public partial class MainPage : ContentPage
 
     public async Task RefreshDevices()
     {
-        var ss = this.CollectionView.BindingContext;
-
         //List<Task> deviceRefreshing = new();
 
         //foreach (DeviceContent dc in )

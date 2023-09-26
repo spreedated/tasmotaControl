@@ -44,6 +44,10 @@
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\appicon.svg" BaseSize="256,256" />
+		<MauiImage Update="Resources\Images\tasmota_icon.svg" BaseSize="256,256" />
+		<MauiImage Update="Resources\Images\nexn_logo.svg" BaseSize="256,256" />
+		<MauiImage Update="Resources\Images\nexn_logo_black.svg" BaseSize="256,256" />
+		<MauiImage Update="Resources\Images\nexn_logo_green.svg" BaseSize="256,256" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -53,6 +57,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\nexn_logo.svg" />
+	  <None Remove="Resources\Images\nexn_logo_black.svg" />
+	  <None Remove="Resources\Images\nexn_logo_green.svg" />
 	  <None Remove="Resources\Raw\AboutMauiText.txt" />
 	  <None Remove="Resources\Raw\AboutText.txt" />
 	</ItemGroup>
