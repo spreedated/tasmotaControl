@@ -6,7 +6,7 @@ namespace TasmotaQuery.Json
 {
     public class TimespanConverter : JsonConverter<TimeSpan>
     {
-        public const string TimeSpanFormatString = @"dThh\:mm\:ss";
+        public const string TimeSpanFormatString = @"d\Thh\:mm\:ss";
 
         public override void WriteJson(JsonWriter writer, TimeSpan value, JsonSerializer serializer)
         {

@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.ObjectModel;
 
 namespace TasmotaQuery.Models
 {
@@ -16,7 +15,7 @@ namespace TasmotaQuery.Models
         public string Topic { get; set; }
 
         [JsonProperty("FriendlyName")]
-        public ReadOnlyCollection<string> FriendlyNames { get; set; }
+        public string[] FriendlyNames { get; set; }
 
         [JsonProperty("DeviceName")]
         public string Name { get; set; }

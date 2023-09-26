@@ -5,6 +5,8 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <NoWarn>1701;1702;IDE0063</NoWarn>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>tasquery.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
