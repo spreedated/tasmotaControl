@@ -112,5 +112,36 @@ namespace TasmotaQuery
 
             return device;
         }
+
+        /// <summary>
+        /// Retrieves 'Status 7' Information<br/>
+        /// Time
+        /// </summary>
+        /// <param name="device"></param>
+        /// <returns></returns>
+        public static async Task<IDevice> GetStatus7Time(this Device device)
+        {
+            using (HttpClient hc = device.httpHandler != null ? new(device.httpHandler) : new())
+            {
+                hc.Timeout = new TimeSpan(0, 0, 10);
+                try
+                {
+                    HttpResponseMessage resp = await hc.GetAsync($"http://{device.Address}/cm?cmnd=status%207");
+                    string json = await resp.Content.ReadAsStringAsync();
+
+                    JObject jo = JObject.Parse(json);
+
+                    device.Time = JsonConvert.DeserializeObject<Time>(jo["StatusTIM"].ToString());
+                    device.Time.QueryTime = DateTime.Now;
+
+                }
+                catch (Exception)
+                {
+                    device.Time = null;
+                }
+            }
+
+            return device;
+        }
     }
 }

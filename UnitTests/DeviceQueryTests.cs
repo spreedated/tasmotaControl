@@ -19,6 +19,7 @@ namespace UnitTests
         private string stateResponse;
         private string statusResponse;
         private string status2firmwareResponse;
+        private string status7timeResponse;
 
         [SetUp]
         public void SetUp()
@@ -28,6 +29,7 @@ namespace UnitTests
             this.stateResponse = LoadJson("State");
             this.statusResponse = LoadJson("Status");
             this.status2firmwareResponse = LoadJson("Firmware");
+            this.status7timeResponse = LoadJson("Time");
         }
 
         [Test]
@@ -183,6 +185,57 @@ namespace UnitTests
                 Assert.Multiple(() =>
                 {
                     Assert.That(d.Firmware, Is.Null);
+                });
+            });
+        }
+
+        [Test]
+        public void StatusQuery7TimeTests()
+        {
+            this.mockHttp.When("http://*/cm?cmnd=status%207")
+                .Respond("application/json", this.status7timeResponse);
+
+            Device d = new(IPAddress.Parse("192.168.0.0"))
+            {
+                httpHandler = this.mockHttp
+            };
+
+            Assert.DoesNotThrowAsync(async () =>
+            {
+                Assert.That(d.Time, Is.Null);
+                await d.GetStatus7Time();
+                Assert.Multiple(() =>
+                {
+                    Assert.That(d.Time, Is.Not.Null);
+                    Assert.That(d.Time.Timezone, Is.EqualTo(99));
+                    Assert.That(d.Time.Utc, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.Time.Local, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.Time.StartDst, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.Time.EndDst, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.Time.Sunrise, Is.EqualTo(new TimeOnly(7,42)));
+                    Assert.That(d.Time.Sunset, Is.EqualTo(new TimeOnly(19,40)));
+                });
+            });
+        }
+
+        [Test]
+        public void StatusQuery7TimeFailTests()
+        {
+            this.mockHttp.When("http://*/cm?cmnd=status%207")
+                .Respond("application/json", new string('.', 15));
+
+            Device d = new(IPAddress.Parse("192.168.0.0"))
+            {
+                httpHandler = this.mockHttp
+            };
+
+            Assert.DoesNotThrowAsync(async () =>
+            {
+                Assert.That(d.Time, Is.Null);
+                await d.GetStatus7Time();
+                Assert.Multiple(() =>
+                {
+                    Assert.That(d.Time, Is.Null);
                 });
             });
         }

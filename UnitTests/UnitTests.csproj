@@ -15,12 +15,14 @@
     <None Remove="JsonResponses\Firmware.json" />
     <None Remove="JsonResponses\State.json" />
     <None Remove="JsonResponses\Status.json" />
+    <None Remove="JsonResponses\Time.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="JsonResponses\Firmware.json" />
     <EmbeddedResource Include="JsonResponses\State.json" />
     <EmbeddedResource Include="JsonResponses\Status.json" />
+    <EmbeddedResource Include="JsonResponses\Time.json" />
   </ItemGroup>
 
   <ItemGroup>

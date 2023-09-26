@@ -18,6 +18,7 @@ namespace TasmotaQuery
         public State State { get; set; }
         public Status Status { get; set; }
         public Firmware Firmware { get; set; }
+        public Time Time { get; set; }
 
         #region Constructor
         public Device(string address)
