@@ -143,5 +143,37 @@ namespace TasmotaQuery
 
             return device;
         }
+
+        /// <summary>
+        /// Retrieves 'Status 10' Information<br/>
+        /// Sensors
+        /// </summary>
+        /// <param name="device"></param>
+        /// <returns></returns>
+        public static async Task<IDevice> GetStatus10Sensors(this Device device)
+        {
+            using (HttpClient hc = device.httpHandler != null ? new(device.httpHandler) : new())
+            {
+                hc.Timeout = new TimeSpan(0, 0, 10);
+                try
+                {
+                    HttpResponseMessage resp = await hc.GetAsync($"http://{device.Address}/cm?cmnd=status%2010");
+                    string json = await resp.Content.ReadAsStringAsync();
+
+                    JObject jo = JObject.Parse(json);
+
+                    device.Sensors = JsonConvert.DeserializeObject<Sensors>(jo["StatusSNS"].ToString());
+                    device.Sensors.Temperature1 = jo.SelectToken("StatusSNS.ANALOG.Temperature1", false).ToObject<float>();
+                    device.Sensors.QueryTime = DateTime.Now;
+
+                }
+                catch (Exception)
+                {
+                    device.Time = null;
+                }
+            }
+
+            return device;
+        }
     }
 }

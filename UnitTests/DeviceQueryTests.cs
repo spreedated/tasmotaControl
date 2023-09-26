@@ -20,6 +20,7 @@ namespace UnitTests
         private string statusResponse;
         private string status2firmwareResponse;
         private string status7timeResponse;
+        private string status10sensorsResponse;
 
         [SetUp]
         public void SetUp()
@@ -30,6 +31,7 @@ namespace UnitTests
             this.statusResponse = LoadJson("Status");
             this.status2firmwareResponse = LoadJson("Firmware");
             this.status7timeResponse = LoadJson("Time");
+            this.status10sensorsResponse = LoadJson("Sensors");
         }
 
         [Test]
@@ -64,6 +66,7 @@ namespace UnitTests
                     Assert.That(d.State.Wifi, Is.Not.Null);
                     Assert.That(d.State.Wifi.Channel, Is.EqualTo(1));
                     Assert.That(d.State.Wifi.Mode, Is.EqualTo("11n"));
+                    Assert.That(d.State.QueryTime, Is.Not.EqualTo(default(DateTime)));
                 });
             });
         }
@@ -114,6 +117,7 @@ namespace UnitTests
                     Assert.That(d.Status.FriendlyNames[1], Is.Not.Null);
                     Assert.That(string.IsNullOrEmpty(d.Status.FriendlyNames[1]), Is.True);
                     Assert.That(d.Status.Topic, Does.StartWith("nspanel"));
+                    Assert.That(d.Status.QueryTime, Is.Not.EqualTo(default(DateTime)));
                 });
             });
         }
@@ -163,6 +167,7 @@ namespace UnitTests
                     Assert.That(d.Firmware.CpuFrequency, Is.EqualTo(160));
                     Assert.That(d.Firmware.Version, Is.Not.Null);
                     Assert.That(d.Firmware.Version, Does.StartWith("12.5.0"));
+                    Assert.That(d.Firmware.QueryTime, Is.Not.EqualTo(default(DateTime)));
                 });
             });
         }
@@ -214,6 +219,7 @@ namespace UnitTests
                     Assert.That(d.Time.EndDst, Is.Not.EqualTo(default(DateTime)));
                     Assert.That(d.Time.Sunrise, Is.EqualTo(new TimeOnly(7,42)));
                     Assert.That(d.Time.Sunset, Is.EqualTo(new TimeOnly(19,40)));
+                    Assert.That(d.Time.QueryTime, Is.Not.EqualTo(default(DateTime)));
                 });
             });
         }
@@ -236,6 +242,54 @@ namespace UnitTests
                 Assert.Multiple(() =>
                 {
                     Assert.That(d.Time, Is.Null);
+                });
+            });
+        }
+
+        [Test]
+        public void StatusQuery10SensorsTests()
+        {
+            this.mockHttp.When("http://*/cm?cmnd=status%2010")
+                .Respond("application/json", this.status10sensorsResponse);
+
+            Device d = new(IPAddress.Parse("192.168.0.0"))
+            {
+                httpHandler = this.mockHttp
+            };
+
+            Assert.DoesNotThrowAsync(async () =>
+            {
+                Assert.That(d.Sensors, Is.Null);
+                await d.GetStatus10Sensors();
+                Assert.Multiple(() =>
+                {
+                    Assert.That(d.Sensors, Is.Not.Null);
+                    Assert.That(d.Sensors.Temperature1, Is.EqualTo(24.4f));
+                    Assert.That(d.Sensors.TempUnit, Is.EqualTo('C'));
+                    Assert.That(d.Sensors.Time, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.Sensors.QueryTime, Is.Not.EqualTo(default(DateTime)));
+                });
+            });
+        }
+
+        [Test]
+        public void StatusQuery10SensorsFailTests()
+        {
+            this.mockHttp.When("http://*/cm?cmnd=status%2010")
+                .Respond("application/json", new string('.', 15));
+
+            Device d = new(IPAddress.Parse("192.168.0.0"))
+            {
+                httpHandler = this.mockHttp
+            };
+
+            Assert.DoesNotThrowAsync(async () =>
+            {
+                Assert.That(d.Sensors, Is.Null);
+                await d.GetStatus7Time();
+                Assert.Multiple(() =>
+                {
+                    Assert.That(d.Sensors, Is.Null);
                 });
             });
         }
