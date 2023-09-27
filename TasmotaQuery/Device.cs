@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using TasmotaQuery.Models;
 
 namespace TasmotaQuery
@@ -13,24 +10,26 @@ namespace TasmotaQuery
     {
         internal HttpMessageHandler httpHandler;
         public IPAddress Address { get; set; }
-        public bool IsAvaiable { get; set; }
+        public bool IsAvailable { get; internal set; }
         public DeviceProperties DeviceProperties { get; } = new();
-        public State State { get; set; }
-        public Status Status { get; set; }
-        public Firmware Firmware { get; set; }
-        public Time Time { get; set; }
-        public Sensors Sensors { get; set; }
+        public DeviceStatusResponses DeviceStatusResponses { get; } = new();
 
         #region Constructor
         public Device(string address)
         {
-            if (!IPAddress.TryParse(address, out IPAddress add))
+            if (string.IsNullOrEmpty(address))
+            {
+                throw new ArgumentNullException(nameof(address), "Address is null");
+            }
+
+            if (!IPAddress.TryParse(address, out IPAddress add) || address.Count(x => x == '.') != 3)
             {
                 throw new ArgumentException("Invalid address", nameof(address));
             }
 
             this.Address = add;
         }
+
         public Device(string address, DeviceProperties deviceProperties) : this(address)
         {
             this.DeviceProperties = deviceProperties;
@@ -40,6 +39,7 @@ namespace TasmotaQuery
         {
             this.Address = address;
         }
+
         public Device(IPAddress address, DeviceProperties deviceProperties) : this(address)
         {
             this.DeviceProperties = deviceProperties;

@@ -47,7 +47,7 @@ namespace UnitTests
             Assert.DoesNotThrowAsync(async () =>
             {
                 await d.IsAvailable();
-                Assert.That(d.IsAvaiable, Is.True);
+                Assert.That(d.IsAvailable, Is.True);
                 await d.GetState();
                 Assert.Multiple(() =>
                 {
@@ -81,7 +81,30 @@ namespace UnitTests
             Assert.DoesNotThrowAsync(async () =>
             {
                 await d.IsAvailable();
-                Assert.That(d.IsAvaiable, Is.False);
+                Assert.That(d.IsAvailable, Is.False);
+                await d.GetState();
+                Assert.Multiple(() =>
+                {
+                    Assert.That(d.DeviceStatusResponses.State, Is.Null);
+                });
+            });
+        }
+
+        [Test]
+        public void StateQueryFail3Tests()
+        {
+            this.mockHttp.When("http://*/cm?cmnd=state")
+                .Respond(HttpStatusCode.BadGateway);
+
+            Device d = new(IPAddress.Parse("192.168.0.0"))
+            {
+                httpHandler = this.mockHttp
+            };
+
+            Assert.DoesNotThrowAsync(async () =>
+            {
+                await d.IsAvailable();
+                Assert.That(d.IsAvailable, Is.False);
                 await d.GetState();
                 Assert.Multiple(() =>
                 {

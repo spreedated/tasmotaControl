@@ -5,8 +5,9 @@ namespace TasmotaQuery
 {
     public interface IDevice
     {
-        public IPAddress Address { get; set; }
-        public bool IsAvaiable { get; set; }
-        public State State { get; set; }
+        public IPAddress Address { get; }
+        public bool IsAvailable { get; }
+        public DeviceProperties DeviceProperties { get; }
+        public DeviceStatusResponses DeviceStatusResponses { get; }
     }
 }
