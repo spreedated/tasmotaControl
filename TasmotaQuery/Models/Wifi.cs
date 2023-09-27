@@ -4,37 +4,37 @@ using TasmotaQuery.Json;
 
 namespace TasmotaQuery.Models
 {
-    public sealed class Wifi
+    public sealed record Wifi
     {
         [JsonProperty("AP")]
-        public short Ap { get; set; }
+        public short Ap { get; internal set; }
 
         [JsonProperty("SSId")]
-        public string Ssid { get; set; }
+        public string Ssid { get; internal set; }
 
         [JsonProperty("BSSId")]
-        public string Bssid { get; set; }
+        public string Bssid { get; internal set; }
 
         [JsonProperty("Channel")]
-        public short Channel { get; set; }
+        public short Channel { get; internal set; }
 
         [JsonProperty("Mode")]
-        public string Mode { get; set; }
+        public string Mode { get; internal set; }
 
         [JsonProperty("RSSI")]
-        public short Rssi { get; set; }
+        public short Rssi { get; internal set; }
 
         [JsonProperty("Signal")]
-        public int Signal { get; set; }
+        public int Signal { get; internal set; }
 
         [JsonProperty("LinkCount")]
-        public int LinkCount { get; set; }
+        public int LinkCount { get; internal set; }
 
         [JsonProperty("Downtime")]
         [JsonConverter(typeof(TimespanConverter))]
-        public TimeSpan Downtime { get; set; }
+        public TimeSpan Downtime { get; internal set; }
 
         [JsonIgnore]
-        public DateTime QueryTime { get; set; }
+        public DateTime QueryTime { get; internal set; }
     }
 }

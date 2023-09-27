@@ -3,30 +3,30 @@ using System;
 
 namespace TasmotaQuery.Models
 {
-    public sealed class Firmware
+    public sealed record Firmware
     {
         [JsonProperty("Version")]
-        public string Version { get; set; }
+        public string Version { get; internal set; }
 
         [JsonProperty("BuildDateTime")]
-        public DateTime BuildDateTime { get; set; }
+        public DateTime BuildDateTime { get; internal set; }
 
         [JsonProperty("Core")]
-        public string Core { get; set; }
+        public string Core { get; internal set; }
 
         [JsonProperty("SDK")]
-        public string Sdk { get; set; }
+        public string Sdk { get; internal set; }
 
         [JsonProperty("CpuFrequency")]
-        public int CpuFrequency { get; set; }
+        public int CpuFrequency { get; internal set; }
 
         [JsonProperty("Hardware")]
-        public string Hardware { get; set; }
+        public string Hardware { get; internal set; }
 
         [JsonProperty("CR")]
-        public string Clockrate { get; set; }
-
+        public string Clockrate { get; internal set; }
+        
         [JsonIgnore()]
-        public DateTime QueryTime { get; set; }
+        public DateTime QueryTime { get; internal set; }
     }
 }

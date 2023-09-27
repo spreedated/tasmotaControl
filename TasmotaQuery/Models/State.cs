@@ -4,37 +4,37 @@ using TasmotaQuery.Json;
 
 namespace TasmotaQuery.Models
 {
-    public sealed class State
+    public sealed record State
     {
         [JsonProperty("Time")]
-        public DateTime PowerOnState { get; set; }
+        public DateTime PowerOnState { get; internal set; }
 
         [JsonProperty("Uptime")]
         [JsonConverter(typeof(TimespanConverter))]
-        public TimeSpan Uptime { get; set; }
+        public TimeSpan Uptime { get; internal set; }
 
         [JsonProperty("UptimeSec")]
-        public long UptimeSec { get; set; }
+        public long UptimeSec { get; internal set; }
 
         [JsonProperty("Heap")]
-        public int Heap { get; set; }
+        public int Heap { get; internal set; }
 
         [JsonProperty("SleepMode")]
-        public string SleepMode { get; set; }
+        public string SleepMode { get; internal set; }
 
         [JsonProperty("Sleep")]
-        public int Sleep { get; set; }
+        public int Sleep { get; internal set; }
 
         [JsonProperty("LoadAvg")]
-        public int LoadAvg { get; set; }
+        public int LoadAvg { get; internal set; }
 
         [JsonProperty("MqttCount")]
-        public int MqttCount { get; set; }
+        public int MqttCount { get; internal set; }
 
         [JsonProperty("Wifi")]
-        public Wifi Wifi { get; set; }
+        public Wifi Wifi { get; internal set; }
 
         [JsonIgnore]
-        public DateTime QueryTime { get; set; }
+        public DateTime QueryTime { get; internal set; }
     }
 }
