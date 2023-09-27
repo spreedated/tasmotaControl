@@ -9,43 +9,45 @@ namespace TasmotaQuery
 {
     public static class Queries
     {
-        private static async Task<string> DownloadJsonResponse(Device device, string url)
+        private static async Task<HttpResponseMessage> GetResponseMessage(Device device, string url)
         {
             using (HttpClient hc = device.httpHandler != null ? new(device.httpHandler) : new())
             {
                 hc.Timeout = new TimeSpan(0, 0, 10);
 
-                HttpResponseMessage resp = await hc.GetAsync(url);
-                return await resp.Content.ReadAsStringAsync();
+                return await hc.GetAsync(url);
             }
+        }
+
+        private static async Task<string> DownloadJsonResponse(Device device, string url)
+        {
+            return await (await GetResponseMessage(device, url)).Content.ReadAsStringAsync();
+        }
+
+        private static async Task<bool> IsJsonResponse(Device device, string url)
+        {
+            return (await GetResponseMessage(device, url)).IsSuccessStatusCode;
         }
 
         public static async Task<IDevice> IsAvailable(this Device device)
         {
-            using (HttpClient hc = device.httpHandler != null ? new(device.httpHandler) : new())
+            try
             {
-                hc.Timeout = new TimeSpan(0, 0, 10);
-                try
-                {
-                    HttpResponseMessage resp = await hc.GetAsync($"http://{device.Address}/cm");
-                    device.IsAvailable = resp.IsSuccessStatusCode;
-                }
-                catch (Exception)
-                {
-                    device.IsAvailable = false;
-                }
-
-                return device;
+                device.IsAvailable = await IsJsonResponse(device, $"http://{device.Address}/cm");
             }
+            catch (Exception)
+            {
+                device.IsAvailable = false;
+            }
+
+            return device;
         }
 
         public static async Task<IDevice> GetState(this Device device)
         {
             try
             {
-                string json = await DownloadJsonResponse(device, $"http://{device.Address}/cm?cmnd=state");
-                    
-                device.DeviceStatusResponses.State = JsonConvert.DeserializeObject<State>(json);
+                device.DeviceStatusResponses.State = JsonConvert.DeserializeObject<State>(await DownloadJsonResponse(device, $"http://{device.Address}/cm?cmnd=state"));
                 device.DeviceStatusResponses.State.QueryTime = DateTime.Now;
 
                 if (device.DeviceStatusResponses.State.Wifi != null)
@@ -65,9 +67,7 @@ namespace TasmotaQuery
         {
             try
             {
-                string json = await DownloadJsonResponse(device, $"http://{device.Address}/cm?cmnd=status");
-
-                JObject jo = JObject.Parse(json);
+                JObject jo = JObject.Parse(await DownloadJsonResponse(device, $"http://{device.Address}/cm?cmnd=status"));
 
                 device.DeviceStatusResponses.Status = JsonConvert.DeserializeObject<Status>(jo["Status"].ToString());
                 device.DeviceStatusResponses.Status.QueryTime = DateTime.Now;
@@ -91,9 +91,7 @@ namespace TasmotaQuery
         {
             try
             {
-                string json = await DownloadJsonResponse(device, $"http://{device.Address}/cm?cmnd=status%202");
-
-                JObject jo = JObject.Parse(json);
+                JObject jo = JObject.Parse(await DownloadJsonResponse(device, $"http://{device.Address}/cm?cmnd=status%202"));
 
                 device.DeviceStatusResponses.Firmware = JsonConvert.DeserializeObject<Firmware>(jo["StatusFWR"].ToString());
                 device.DeviceStatusResponses.Firmware.QueryTime = DateTime.Now;
@@ -117,9 +115,7 @@ namespace TasmotaQuery
         {
             try
             {
-                string json = await DownloadJsonResponse(device, $"http://{device.Address}/cm?cmnd=status%207");
-
-                JObject jo = JObject.Parse(json);
+                JObject jo = JObject.Parse(await DownloadJsonResponse(device, $"http://{device.Address}/cm?cmnd=status%207"));
 
                 device.DeviceStatusResponses.Time = JsonConvert.DeserializeObject<Time>(jo["StatusTIM"].ToString());
                 device.DeviceStatusResponses.Time.QueryTime = DateTime.Now;
@@ -143,9 +139,7 @@ namespace TasmotaQuery
         {
             try
             {
-                string json = await DownloadJsonResponse(device, $"http://{device.Address}/cm?cmnd=status%2010");
-
-                JObject jo = JObject.Parse(json);
+                JObject jo = JObject.Parse(await DownloadJsonResponse(device, $"http://{device.Address}/cm?cmnd=status%2010"));
 
                 device.DeviceStatusResponses.Sensors = JsonConvert.DeserializeObject<Sensors>(jo["StatusSNS"].ToString());
                 device.DeviceStatusResponses.Sensors.Temperature1 = jo.SelectToken("StatusSNS.ANALOG.Temperature1", false).ToObject<float>();
@@ -154,7 +148,7 @@ namespace TasmotaQuery
             }
             catch (Exception)
             {
-                device.DeviceStatusResponses.Time = null;
+                device.DeviceStatusResponses.Sensors = null;
             }
 
             return device;
