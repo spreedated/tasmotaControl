@@ -45,5 +45,10 @@ namespace TasmotaQuery
             this.DeviceProperties = deviceProperties;
         }
         #endregion
+
+        public IQuery Query()
+        { 
+            return new Query(this);
+        }
     }
 }

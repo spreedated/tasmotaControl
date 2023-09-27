@@ -1,14 +1,23 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System;
 using TasmotaQuery.Models;
 
 namespace TasmotaQuery
 {
-    public static class Queries
+    public class Query : IQuery
     {
+        public Device Device { get; internal set; }
+
+        #region Constructor
+        public Query(Device device)
+        {
+            this.Device = device;
+        }
+        #endregion
+
         private static async Task<HttpResponseMessage> GetResponseMessage(Device device, string url)
         {
             using (HttpClient hc = device.httpHandler != null ? new(device.httpHandler) : new())
@@ -55,90 +64,87 @@ namespace TasmotaQuery
             }
         }
 
-        public static async Task<IDevice> IsAvailable(this Device device)
+        public async Task<IQuery> IsAvailable()
         {
-            device.IsAvailable = await IsJsonResponse(device, $"http://{device.Address}/cm");
+            this.Device.IsAvailable = await IsJsonResponse(this.Device, $"http://{this.Device.Address}/cm");
 
-            return device;
+            return this;
         }
 
-        public static async Task<IDevice> GetState(this Device device)
+        public async Task<IQuery> GetState()
         {
-            device.DeviceStatusResponses.State = await GetJsonResponseAndParseJsonAndDoMethod<State>(device,
-                $"http://{device.Address}/cm?cmnd=state",
+            this.Device.DeviceStatusResponses.State = await GetJsonResponseAndParseJsonAndDoMethod<State>(this.Device,
+                $"http://{this.Device.Address}/cm?cmnd=state",
                 x => x.ToString());
 
-            if (device.DeviceStatusResponses.State != null && device.DeviceStatusResponses.State.Wifi != null)
+            if (this.Device.DeviceStatusResponses.State != null && this.Device.DeviceStatusResponses.State.Wifi != null)
             {
-                device.DeviceStatusResponses.State.Wifi.QueryTime = device.DeviceStatusResponses.State.QueryTime;
+                this.Device.DeviceStatusResponses.State.Wifi.QueryTime = this.Device.DeviceStatusResponses.State.QueryTime;
             }
 
-            return device;
+            return this;
         }
 
-        public static async Task<IDevice> GetStatus(this Device device)
+        public async Task<IQuery> GetStatus()
         {
-            device.DeviceStatusResponses.Status = await GetJsonResponseAndParseJsonAndDoMethod<Status>(device,
-                $"http://{device.Address}/cm?cmnd=status",
+            this.Device.DeviceStatusResponses.Status = await GetJsonResponseAndParseJsonAndDoMethod<Status>(this.Device,
+                $"http://{this.Device.Address}/cm?cmnd=status",
                 x => x["Status"].ToString());
 
-            return device;
+            return this;
         }
 
         /// <summary>
         /// Retrieves 'Status 2' Information<br/>
         /// Firmware
         /// </summary>
-        /// <param name="device"></param>
         /// <returns></returns>
-        public static async Task<IDevice> GetStatus2Firmware(this Device device)
+        public async Task<IQuery> GetStatus2Firmware()
         {
-            device.DeviceStatusResponses.Firmware = await GetJsonResponseAndParseJsonAndDoMethod<Firmware>(device,
-                $"http://{device.Address}/cm?cmnd=status%202",
+            this.Device.DeviceStatusResponses.Firmware = await GetJsonResponseAndParseJsonAndDoMethod<Firmware>(this.Device,
+                $"http://{this.Device.Address}/cm?cmnd=status%202",
                 x => x["StatusFWR"].ToString());
 
-            return device;
+            return this;
         }
 
         /// <summary>
         /// Retrieves 'Status 7' Information<br/>
         /// Time
         /// </summary>
-        /// <param name="device"></param>
         /// <returns></returns>
-        public static async Task<IDevice> GetStatus7Time(this Device device)
+        public async Task<IQuery> GetStatus7Time()
         {
-            device.DeviceStatusResponses.Time = await GetJsonResponseAndParseJsonAndDoMethod<Time>(device,
-                $"http://{device.Address}/cm?cmnd=status%207",
+            this.Device.DeviceStatusResponses.Time = await GetJsonResponseAndParseJsonAndDoMethod<Time>(this.Device,
+                $"http://{this.Device.Address}/cm?cmnd=status%207",
                 x => x["StatusTIM"].ToString());
 
-            return device;
+            return this;
         }
 
         /// <summary>
         /// Retrieves 'Status 10' Information<br/>
         /// Sensors
         /// </summary>
-        /// <param name="device"></param>
         /// <returns></returns>
-        public static async Task<IDevice> GetStatus10Sensors(this Device device)
+        public async Task<IQuery> GetStatus10Sensors()
         {
             float temp1 = 0.0f;
 
-            device.DeviceStatusResponses.Sensors = await GetJsonResponseAndParseJsonAndDoMethod<Sensors>(device,
-                $"http://{device.Address}/cm?cmnd=status%2010",
+            this.Device.DeviceStatusResponses.Sensors = await GetJsonResponseAndParseJsonAndDoMethod<Sensors>(this.Device,
+                $"http://{this.Device.Address}/cm?cmnd=status%2010",
                 (x) =>
-                    {
-                        temp1 = x.SelectToken("StatusSNS.ANALOG.Temperature1", false).ToObject<float>();
-                        return x["StatusSNS"].ToString();
-                    });
+                {
+                    temp1 = x.SelectToken("StatusSNS.ANALOG.Temperature1", false).ToObject<float>();
+                    return x["StatusSNS"].ToString();
+                });
 
-            if (device.DeviceStatusResponses.Sensors != null)
+            if (this.Device.DeviceStatusResponses.Sensors != null)
             {
-                device.DeviceStatusResponses.Sensors.Temperature1 = temp1;
+                this.Device.DeviceStatusResponses.Sensors.Temperature1 = temp1;
             }
 
-            return device;
+            return this;
         }
     }
 }
