@@ -11,6 +11,14 @@
     <AssemblyOriginatorKeyFile>tastests.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;S1186</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;S1186</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="JsonResponses\Firmware.json" />
     <None Remove="JsonResponses\Sensors.json" />
