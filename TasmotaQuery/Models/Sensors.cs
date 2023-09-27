@@ -3,7 +3,7 @@ using System;
 
 namespace TasmotaQuery.Models
 {
-    public sealed record Sensors
+    public sealed record Sensors : StateBase
     {
         [JsonProperty("Time")]
         public DateTime Time { get; internal set; }
@@ -13,8 +13,5 @@ namespace TasmotaQuery.Models
 
         [JsonIgnore()]
         public float Temperature1 { get; internal set; }
-
-        [JsonIgnore()]
-        public DateTime QueryTime { get; internal set; }
     }
 }

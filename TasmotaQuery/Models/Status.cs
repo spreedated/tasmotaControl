@@ -3,7 +3,7 @@ using System;
 
 namespace TasmotaQuery.Models
 {
-    public sealed record Status
+    public sealed record Status : StateBase
     {
         [JsonProperty("PowerOnState")]
         public short PowerOnState { get; internal set; }
@@ -19,8 +19,5 @@ namespace TasmotaQuery.Models
 
         [JsonProperty("DeviceName")]
         public string Name { get; internal set; }
-
-        [JsonIgnore]
-        public DateTime QueryTime { get; internal set; }
     }
 }

@@ -4,7 +4,7 @@ using TasmotaQuery.Json;
 
 namespace TasmotaQuery.Models
 {
-    public sealed record Time
+    public sealed record Time : StateBase
     {
         [JsonProperty("UTC")]
         public DateTime Utc { get; internal set; }
@@ -28,8 +28,5 @@ namespace TasmotaQuery.Models
         [JsonProperty("Sunset")]
         [JsonConverter(typeof(TimeOnlyTasmotaJsonConverter))]
         public TimeOnly Sunset { get; internal set; }
-
-        [JsonIgnore()]
-        public DateTime QueryTime { get; internal set; }
     }
 }

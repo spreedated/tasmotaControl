@@ -3,7 +3,7 @@ using System;
 
 namespace TasmotaQuery.Models
 {
-    public sealed record Firmware
+    public sealed record Firmware : StateBase
     {
         [JsonProperty("Version")]
         public string Version { get; internal set; }
@@ -25,8 +25,5 @@ namespace TasmotaQuery.Models
 
         [JsonProperty("CR")]
         public string Clockrate { get; internal set; }
-        
-        [JsonIgnore()]
-        public DateTime QueryTime { get; internal set; }
     }
 }

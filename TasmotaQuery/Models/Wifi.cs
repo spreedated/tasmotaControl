@@ -4,7 +4,7 @@ using TasmotaQuery.Json;
 
 namespace TasmotaQuery.Models
 {
-    public sealed record Wifi
+    public sealed record Wifi : StateBase
     {
         [JsonProperty("AP")]
         public short Ap { get; internal set; }
@@ -33,8 +33,5 @@ namespace TasmotaQuery.Models
         [JsonProperty("Downtime")]
         [JsonConverter(typeof(TimespanConverter))]
         public TimeSpan Downtime { get; internal set; }
-
-        [JsonIgnore]
-        public DateTime QueryTime { get; internal set; }
     }
 }
