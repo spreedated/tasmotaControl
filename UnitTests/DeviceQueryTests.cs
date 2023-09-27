@@ -1,12 +1,8 @@
 ﻿using NUnit.Framework;
 using RichardSzalay.MockHttp;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using TasmotaQuery;
 using static UnitTests.HelperFunctions;
 
@@ -42,7 +38,7 @@ namespace UnitTests
 
             this.mockHttp.When("http://*/cm")
                 .Respond("application/json", "{ \"WARNING\": \"Enter command cmnd=\" }");
-            
+
             Device d = new(IPAddress.Parse("192.168.0.0"))
             {
                 httpHandler = this.mockHttp
@@ -55,18 +51,18 @@ namespace UnitTests
                 await d.GetState();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(d.State.Wifi.Downtime, Is.Not.EqualTo(default(TimeSpan)));
-                    Assert.That(d.State.Wifi.Downtime.Minutes, Is.EqualTo(13));
-                    Assert.That(d.State.Uptime.Minutes, Is.EqualTo(14));
-                    Assert.That(d.State.Uptime.Hours, Is.EqualTo(20));
-                    Assert.That(d.State.Uptime.Days, Is.EqualTo(26));
-                    Assert.That(d.State.Uptime, Is.Not.EqualTo(default(TimeSpan)));
-                    Assert.That(d.State, Is.Not.Null);
-                    Assert.That(d.State.Heap, Is.EqualTo(121));
-                    Assert.That(d.State.Wifi, Is.Not.Null);
-                    Assert.That(d.State.Wifi.Channel, Is.EqualTo(1));
-                    Assert.That(d.State.Wifi.Mode, Is.EqualTo("11n"));
-                    Assert.That(d.State.QueryTime, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.DeviceStatusResponses.State.Wifi.Downtime, Is.Not.EqualTo(default(TimeSpan)));
+                    Assert.That(d.DeviceStatusResponses.State.Wifi.Downtime.Minutes, Is.EqualTo(13));
+                    Assert.That(d.DeviceStatusResponses.State.Uptime.Minutes, Is.EqualTo(14));
+                    Assert.That(d.DeviceStatusResponses.State.Uptime.Hours, Is.EqualTo(20));
+                    Assert.That(d.DeviceStatusResponses.State.Uptime.Days, Is.EqualTo(26));
+                    Assert.That(d.DeviceStatusResponses.State.Uptime, Is.Not.EqualTo(default(TimeSpan)));
+                    Assert.That(d.DeviceStatusResponses.State, Is.Not.Null);
+                    Assert.That(d.DeviceStatusResponses.State.Heap, Is.EqualTo(121));
+                    Assert.That(d.DeviceStatusResponses.State.Wifi, Is.Not.Null);
+                    Assert.That(d.DeviceStatusResponses.State.Wifi.Channel, Is.EqualTo(1));
+                    Assert.That(d.DeviceStatusResponses.State.Wifi.Mode, Is.EqualTo("11n"));
+                    Assert.That(d.DeviceStatusResponses.State.QueryTime, Is.Not.EqualTo(default(DateTime)));
                 });
             });
         }
@@ -89,7 +85,7 @@ namespace UnitTests
                 await d.GetState();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(d.State, Is.Null);
+                    Assert.That(d.DeviceStatusResponses.State, Is.Null);
                 });
             });
         }
@@ -107,17 +103,17 @@ namespace UnitTests
 
             Assert.DoesNotThrowAsync(async () =>
             {
-                Assert.That(d.Status, Is.Null);
+                Assert.That(d.DeviceStatusResponses.Status, Is.Null);
                 await d.GetStatus();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(d.Status, Is.Not.Null);
-                    Assert.That(d.Status.FriendlyNames, Is.Not.Empty);
-                    Assert.That(d.Status.FriendlyNames.Count, Is.EqualTo(2));
-                    Assert.That(d.Status.FriendlyNames[1], Is.Not.Null);
-                    Assert.That(string.IsNullOrEmpty(d.Status.FriendlyNames[1]), Is.True);
-                    Assert.That(d.Status.Topic, Does.StartWith("nspanel"));
-                    Assert.That(d.Status.QueryTime, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.DeviceStatusResponses.Status, Is.Not.Null);
+                    Assert.That(d.DeviceStatusResponses.Status.FriendlyNames, Is.Not.Empty);
+                    Assert.That(d.DeviceStatusResponses.Status.FriendlyNames.Count, Is.EqualTo(2));
+                    Assert.That(d.DeviceStatusResponses.Status.FriendlyNames[1], Is.Not.Null);
+                    Assert.That(string.IsNullOrEmpty(d.DeviceStatusResponses.Status.FriendlyNames[1]), Is.True);
+                    Assert.That(d.DeviceStatusResponses.Status.Topic, Does.StartWith("nspanel"));
+                    Assert.That(d.DeviceStatusResponses.Status.QueryTime, Is.Not.EqualTo(default(DateTime)));
                 });
             });
         }
@@ -135,11 +131,11 @@ namespace UnitTests
 
             Assert.DoesNotThrowAsync(async () =>
             {
-                Assert.That(d.Status, Is.Null);
+                Assert.That(d.DeviceStatusResponses.Status, Is.Null);
                 await d.GetStatus();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(d.Status, Is.Null);
+                    Assert.That(d.DeviceStatusResponses.Status, Is.Null);
                 });
             });
         }
@@ -157,17 +153,17 @@ namespace UnitTests
 
             Assert.DoesNotThrowAsync(async () =>
             {
-                Assert.That(d.Firmware, Is.Null);
+                Assert.That(d.DeviceStatusResponses.Firmware, Is.Null);
                 await d.GetStatus2Firmware();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(d.Firmware, Is.Not.Null);
-                    Assert.That(d.Firmware.Core, Is.Not.Null);
-                    Assert.That(d.Firmware.Core, Is.EqualTo("2_0_7"));
-                    Assert.That(d.Firmware.CpuFrequency, Is.EqualTo(160));
-                    Assert.That(d.Firmware.Version, Is.Not.Null);
-                    Assert.That(d.Firmware.Version, Does.StartWith("12.5.0"));
-                    Assert.That(d.Firmware.QueryTime, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.DeviceStatusResponses.Firmware, Is.Not.Null);
+                    Assert.That(d.DeviceStatusResponses.Firmware.Core, Is.Not.Null);
+                    Assert.That(d.DeviceStatusResponses.Firmware.Core, Is.EqualTo("2_0_7"));
+                    Assert.That(d.DeviceStatusResponses.Firmware.CpuFrequency, Is.EqualTo(160));
+                    Assert.That(d.DeviceStatusResponses.Firmware.Version, Is.Not.Null);
+                    Assert.That(d.DeviceStatusResponses.Firmware.Version, Does.StartWith("12.5.0"));
+                    Assert.That(d.DeviceStatusResponses.Firmware.QueryTime, Is.Not.EqualTo(default(DateTime)));
                 });
             });
         }
@@ -185,11 +181,11 @@ namespace UnitTests
 
             Assert.DoesNotThrowAsync(async () =>
             {
-                Assert.That(d.Firmware, Is.Null);
+                Assert.That(d.DeviceStatusResponses.Firmware, Is.Null);
                 await d.GetStatus2Firmware();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(d.Firmware, Is.Null);
+                    Assert.That(d.DeviceStatusResponses.Firmware, Is.Null);
                 });
             });
         }
@@ -207,19 +203,19 @@ namespace UnitTests
 
             Assert.DoesNotThrowAsync(async () =>
             {
-                Assert.That(d.Time, Is.Null);
+                Assert.That(d.DeviceStatusResponses.Time, Is.Null);
                 await d.GetStatus7Time();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(d.Time, Is.Not.Null);
-                    Assert.That(d.Time.Timezone, Is.EqualTo(99));
-                    Assert.That(d.Time.Utc, Is.Not.EqualTo(default(DateTime)));
-                    Assert.That(d.Time.Local, Is.Not.EqualTo(default(DateTime)));
-                    Assert.That(d.Time.StartDst, Is.Not.EqualTo(default(DateTime)));
-                    Assert.That(d.Time.EndDst, Is.Not.EqualTo(default(DateTime)));
-                    Assert.That(d.Time.Sunrise, Is.EqualTo(new TimeOnly(7,42)));
-                    Assert.That(d.Time.Sunset, Is.EqualTo(new TimeOnly(19,40)));
-                    Assert.That(d.Time.QueryTime, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.DeviceStatusResponses.Time, Is.Not.Null);
+                    Assert.That(d.DeviceStatusResponses.Time.Timezone, Is.EqualTo(99));
+                    Assert.That(d.DeviceStatusResponses.Time.Utc, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.DeviceStatusResponses.Time.Local, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.DeviceStatusResponses.Time.StartDst, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.DeviceStatusResponses.Time.EndDst, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.DeviceStatusResponses.Time.Sunrise, Is.EqualTo(new TimeOnly(7, 42)));
+                    Assert.That(d.DeviceStatusResponses.Time.Sunset, Is.EqualTo(new TimeOnly(19, 40)));
+                    Assert.That(d.DeviceStatusResponses.Time.QueryTime, Is.Not.EqualTo(default(DateTime)));
                 });
             });
         }
@@ -237,11 +233,11 @@ namespace UnitTests
 
             Assert.DoesNotThrowAsync(async () =>
             {
-                Assert.That(d.Time, Is.Null);
+                Assert.That(d.DeviceStatusResponses.Time, Is.Null);
                 await d.GetStatus7Time();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(d.Time, Is.Null);
+                    Assert.That(d.DeviceStatusResponses.Time, Is.Null);
                 });
             });
         }
@@ -259,15 +255,15 @@ namespace UnitTests
 
             Assert.DoesNotThrowAsync(async () =>
             {
-                Assert.That(d.Sensors, Is.Null);
+                Assert.That(d.DeviceStatusResponses.Sensors, Is.Null);
                 await d.GetStatus10Sensors();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(d.Sensors, Is.Not.Null);
-                    Assert.That(d.Sensors.Temperature1, Is.EqualTo(24.4f));
-                    Assert.That(d.Sensors.TempUnit, Is.EqualTo('C'));
-                    Assert.That(d.Sensors.Time, Is.Not.EqualTo(default(DateTime)));
-                    Assert.That(d.Sensors.QueryTime, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.DeviceStatusResponses.Sensors, Is.Not.Null);
+                    Assert.That(d.DeviceStatusResponses.Sensors.Temperature1, Is.EqualTo(24.4f));
+                    Assert.That(d.DeviceStatusResponses.Sensors.TempUnit, Is.EqualTo('C'));
+                    Assert.That(d.DeviceStatusResponses.Sensors.Time, Is.Not.EqualTo(default(DateTime)));
+                    Assert.That(d.DeviceStatusResponses.Sensors.QueryTime, Is.Not.EqualTo(default(DateTime)));
                 });
             });
         }
@@ -285,11 +281,11 @@ namespace UnitTests
 
             Assert.DoesNotThrowAsync(async () =>
             {
-                Assert.That(d.Sensors, Is.Null);
+                Assert.That(d.DeviceStatusResponses.Sensors, Is.Null);
                 await d.GetStatus7Time();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(d.Sensors, Is.Null);
+                    Assert.That(d.DeviceStatusResponses.Sensors, Is.Null);
                 });
             });
         }
