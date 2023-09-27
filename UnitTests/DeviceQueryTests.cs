@@ -91,7 +91,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void StateQueryFail3Tests()
+        public void StateQueryFail2Tests()
         {
             this.mockHttp.When("http://*/cm?cmnd=state")
                 .Respond(HttpStatusCode.BadGateway);
@@ -311,6 +311,36 @@ namespace UnitTests
                     Assert.That(d.DeviceStatusResponses.Sensors, Is.Null);
                 });
             });
+        }
+
+        [Test]
+        public void ChainedQueryTests()
+        {
+            this.mockHttp.When("http://*/cm?cmnd=status%202")
+                .Respond("application/json", this.status2firmwareResponse);
+
+            this.mockHttp.When("http://*/cm?cmnd=status%207")
+                .Respond("application/json", this.status7timeResponse);
+
+            this.mockHttp.When("http://*/cm?cmnd=status%2010")
+                .Respond("application/json", this.status10sensorsResponse);
+
+            this.mockHttp.When("http://*/cm?cmnd=status")
+                .Respond("application/json", this.statusResponse);
+
+            this.mockHttp.When("http://*/cm?cmnd=state")
+                .Respond("application/json", stateResponse);
+
+            this.mockHttp.When("http://*/cm")
+                .Respond("application/json", "{ \"WARNING\": \"Enter command cmnd=\" }");
+
+            Device d = new(IPAddress.Parse("192.168.0.0"))
+            {
+                httpHandler = this.mockHttp
+            };
+
+            //TODO:
+            Assert.Pass();
         }
 
         [TearDown]
