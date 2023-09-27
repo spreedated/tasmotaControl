@@ -4,7 +4,6 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TasmotaQuery.Models;
-using TasmotaQuery.Json;
 
 namespace TasmotaQuery
 {
