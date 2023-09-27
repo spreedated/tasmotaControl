@@ -36,13 +36,6 @@ namespace TasmotaQuery
             }
         }
 
-        public static async Task<IDevice> IsAvailable(this Device device)
-        {
-            device.IsAvailable = await IsJsonResponse(device, $"http://{device.Address}/cm");
-
-            return device;
-        }
-
         private static async Task<T> GetJsonResponseAndParseJsonAndDoMethod<T>(Device device, string url, Func<JObject, string> action) where T : StateBase
         {
             try
@@ -60,6 +53,13 @@ namespace TasmotaQuery
             {
                 return default;
             }
+        }
+
+        public static async Task<IDevice> IsAvailable(this Device device)
+        {
+            device.IsAvailable = await IsJsonResponse(device, $"http://{device.Address}/cm");
+
+            return device;
         }
 
         public static async Task<IDevice> GetState(this Device device)
