@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android</TargetFrameworks>
+		<TargetFrameworks>net8.0-android</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>TasCon</RootNamespace>
-		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>disable</ImplicitUsings>
+    <UseMaui>true</UseMaui>
     <SourceRevisionId>build$([System.DateTime]::Now.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
 
 		<!-- Display name -->
     <AssemblyTitle>Tasmota Control</AssemblyTitle>
@@ -19,12 +20,13 @@
 		<ApplicationIdGuid>c1e326cb-6675-45ea-97fb-e6b4535cc76b</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0.7</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>1.0.8</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">31.0</SupportedOSPlatformVersion>
     <NoWarn>1701;1702;IDE0063</NoWarn>
-	</PropertyGroup>
+	
+</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
@@ -65,10 +67,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="1.2.1" />
-	  <PackageReference Include="CommunityToolkit.Maui" Version="5.3.0" />
-	  <PackageReference Include="DevExpress.Maui.Controls" Version="23.1.5" />
-	  <PackageReference Include="DevExpress.Maui.Editors" Version="23.1.5" />
+	  <PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="2.1.1" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
+	  <PackageReference Include="DevExpress.Maui.Controls" Version="23.2.4" />
+	  <PackageReference Include="DevExpress.Maui.Editors" Version="23.2.4" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
@@ -78,16 +80,16 @@
 
 	<ItemGroup>
 	  <Reference Include="neXn.Lib">
-	    <HintPath>..\..\neXn.Library\neXn.Lib\bin\Release\net7.0\neXn.Lib.dll</HintPath>
+	    <HintPath>..\Libraries\neXn.Lib.dll</HintPath>
 	  </Reference>
 	  <Reference Include="neXn.Lib.ConfigurationHandler">
-	    <HintPath>..\..\neXn.Library\neXn.Lib.ConfigurationHandler\bin\Release\net7.0\neXn.Lib.ConfigurationHandler.dll</HintPath>
+	    <HintPath>..\Libraries\neXn.Lib.ConfigurationHandler.dll</HintPath>
 	  </Reference>
 	  <Reference Include="neXn.Lib.Exceptions">
-	    <HintPath>..\..\neXn.Library\neXn.Lib\bin\Release\net7.0\neXn.Lib.Exceptions.dll</HintPath>
+	    <HintPath>..\Libraries\neXn.Lib.Exceptions.dll</HintPath>
 	  </Reference>
 	  <Reference Include="neXn.Lib.Maui">
-	    <HintPath>..\..\neXn.Library\neXn.Lib.Maui\bin\Release\net7.0-android\neXn.Lib.Maui.dll</HintPath>
+	    <HintPath>..\Libraries\neXn.Lib.Maui.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 
@@ -153,6 +155,14 @@
 	  <MauiXaml Update="ViewDataTemplates\DeviceContent.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
 	</ItemGroup>
 
 </Project>
