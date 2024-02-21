@@ -28,7 +28,7 @@
     <Shell.FlyoutHeader>
         <HorizontalStackLayout BackgroundColor="{StaticResource NothingBackground}">
             <HorizontalStackLayout Margin="24">
-                <Image Source="appicon.svg" MaximumWidthRequest="24">
+                <Image Source="appiconapp.svg" MaximumWidthRequest="24">
                     <Image.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="#FFFFFF"/>
                     </Image.Behaviors>
