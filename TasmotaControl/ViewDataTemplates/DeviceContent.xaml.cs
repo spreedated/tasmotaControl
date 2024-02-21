@@ -287,13 +287,13 @@ public partial class DeviceContent : ContentView
         this.HasError = false;
         this.ErrorMessage = null;
 
-        await this.Device.RefreshStatus2();
+        await this.Device.Query().GetStatus2Firmware();
 
         this.Dispatcher.Dispatch(() =>
         {
             this.OnPropertyChanged(nameof(this.Device));
 
-            if (this.Device.IsShutter && this.Device.ShutterDirection == 0)
+            if (this.Device.DeviceProperties.IsShutter && this.Device.ShutterDirection == 0)
             {
                 this._ShutterValue = this.Device.ShutterPosition;
                 base.OnPropertyChanged(nameof(this.ShutterValue));

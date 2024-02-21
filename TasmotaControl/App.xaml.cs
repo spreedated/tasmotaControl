@@ -1,4 +1,4 @@
-﻿//#define DELETEALLDEVICES
+﻿#define DELETEALLDEVICES
 
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
@@ -13,6 +13,12 @@ public partial class App : Application
     public App()
     {
         this.InitializeComponent();
+#if DELETEALLDEVICES && DEBUG
+        if (File.Exists(Path.Combine(FileSystem.Current.AppDataDirectory, "config.json")))
+        {
+            File.Delete(Path.Combine(FileSystem.Current.AppDataDirectory, "config.json"));
+        }
+#endif
 
         RuntimeStorage.ConfigurationHandler = new(new(Path.Combine(FileSystem.Current.AppDataDirectory, "config.json")));
         RuntimeStorage.ConfigurationHandler.Load();

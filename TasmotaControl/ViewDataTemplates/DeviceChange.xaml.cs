@@ -1,5 +1,6 @@
 using Microsoft.Maui.Controls;
 using System.Linq;
+using System.Net;
 using System.Windows.Input;
 using TasCon.Logic;
 using TasCon.Resources.Strings;
@@ -9,7 +10,7 @@ namespace TasCon.ViewDataTemplates;
 
 public partial class DeviceChange : ContentView
 {
-    public ICommand RemoveCommand { get; } = new Command<string>(async (d) =>
+    public ICommand RemoveCommand { get; } = new Command<IPAddress>(async (d) =>
     {
         bool ans = await Shell.Current.CurrentPage.DisplayAlert(AppStrings.REMOVE_DEVICE, $"{AppStrings.ARE_YOU_SURE_TO_REMOVE}\n\"{d}\"?", AppStrings.YES, AppStrings.NO);
         

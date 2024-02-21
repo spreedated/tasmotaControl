@@ -20,12 +20,12 @@
             </Grid.ColumnDefinitions>
 
             <VerticalStackLayout Grid.Column="0" HorizontalOptions="StartAndExpand">
-                <Label Text="{Binding DeviceName}" FontFamily="Nothing" FontSize="14" HeightRequest="38" VerticalTextAlignment="Center">
+                <Label Text="{Binding DeviceStatusResponses.Status.Name}" FontFamily="Nothing" FontSize="14" HeightRequest="38" VerticalTextAlignment="Center">
                     <Label.Style>
                         <Style TargetType="Label">
                             <Setter Property="IsVisible" Value="True"/>
                             <Style.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding DeviceName, Converter={conv:IsStringNullOrEmpty}}" Value="True">
+                                <DataTrigger TargetType="Label" Binding="{Binding DeviceStatusResponses.Status.Name, Converter={conv:IsStringNullOrEmpty}}" Value="True">
                                     <Setter Property="IsVisible" Value="False"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -36,8 +36,8 @@
                 <Label Text="{Binding Address}" FontFamily="Nothing" FontSize="14" HeightRequest="38" VerticalTextAlignment="Center" Margin="0" />
 
                 <VerticalStackLayout Grid.Column="0" Grid.ColumnSpan="2" Padding="8,0,0,0" HorizontalOptions="StartAndExpand">
-                    <dx:CheckEdit Label="Shutter" IsChecked="{Binding IsShutter}" HorizontalOptions="StartAndExpand" Margin="0,0,0,8"/>
-                    <dx:CheckEdit Label="Temperature Sensor" IsChecked="{Binding HasTemperature}" HorizontalOptions="StartAndExpand"/>
+                    <dx:CheckEdit Label="Shutter" IsChecked="{Binding DeviceProperties.IsShutter}" HorizontalOptions="StartAndExpand" Margin="0,0,0,8"/>
+                    <dx:CheckEdit Label="Temperature Sensor" IsChecked="{Binding DeviceProperties.HasTemperaturesensor}" HorizontalOptions="StartAndExpand"/>
                 </VerticalStackLayout>
 
             </VerticalStackLayout>

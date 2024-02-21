@@ -7,6 +7,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:material="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
              xmlns:ve="clr-namespace:neXn.Lib.Maui.ViewElements;assembly=neXn.Lib.Maui"
+             xmlns:tasmotaQuery="clr-namespace:TasmotaQuery;assembly=TasmotaQuery"
              x:Class="TasCon.ViewDataTemplates.DeviceContent"
              x:DataType="{x:Type logic:TasmotaDevice}"
              BindingContext="{Binding Device, Source={x:Reference me}, Mode=OneWayToSource}"
@@ -74,7 +75,7 @@
                             </Label.Text>
                         </Label>
 
-                    <Label IsVisible="{Binding Device.HasTemperature, Source={x:Reference me}}" FontFamily="Nothing" Text="{Binding Device.AnalogTemperature, StringFormat='{}{0} °C', Source={x:Reference me}}" HorizontalTextAlignment="Center" TextColor="WhiteSmoke" Margin="0,6,0,0" />
+                    <Label IsVisible="{Binding Device.DeviceProperties.HasTemperaturesensor, Source={x:Reference me}}" FontFamily="Nothing" Text="{Binding Device.DeviceStatusResponses.Sensors.Temperature1, StringFormat='{}{0} °C', Source={x:Reference me}}" HorizontalTextAlignment="Center" TextColor="WhiteSmoke" Margin="0,6,0,0" />
 
                         <toolkit:Expander Margin="10,10,0,0" IsExpanded="{Binding IsExpandedInformation,Source={x:Reference me}, Mode=OneWayToSource}">
                             <toolkit:Expander.Header>
@@ -86,14 +87,14 @@
                             </toolkit:Expander.Header>
 
                             <VerticalStackLayout Padding="10">
-                                <Label HorizontalTextAlignment="Center" Text="{Binding Firmware, StringFormat='Firmware: {0}'}" FontFamily="ProximaNovaRegular"/>
-                                <Label HorizontalTextAlignment="Center" Text="{Binding Hardware, StringFormat='Hardware: {0}'}" FontFamily="ProximaNovaRegular"/>
+                                <Label HorizontalTextAlignment="Center" Text="{Binding DeviceStatusResponses.Firmware.Version, StringFormat='Firmware: {0}'}" FontFamily="ProximaNovaRegular"/>
+                                <Label HorizontalTextAlignment="Center" Text="{Binding DeviceStatusResponses.Firmware.Hardware, StringFormat='Hardware: {0}'}" FontFamily="ProximaNovaRegular"/>
                             </VerticalStackLayout>
                         </toolkit:Expander>
 
                     </VerticalStackLayout>
 
-                <Button Grid.Row="1" IsVisible="{Binding IsShutter, Converter={nconv:BoolReverseConverter}}" Margin="0,16,0,0" WidthRequest="72" Text="{Binding Device.Powerstate, Source={x:Reference me}}" Command="{Binding ToggleCommand, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}" HorizontalOptions="Center">
+                <Button Grid.Row="1" IsVisible="{Binding DeviceProperties.IsShutter, Converter={nconv:BoolReverseConverter}}" Margin="0,16,0,0" WidthRequest="72" Text="{Binding Device.Powerstate, Source={x:Reference me}}" Command="{Binding ToggleCommand, Source={x:Reference me}}" CommandParameter="{Binding Instance, Source={x:Reference me}}" HorizontalOptions="Center">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="BackgroundColor" Value="DarkGreen"/>
@@ -101,7 +102,7 @@
                                 <Setter Property="FontFamily" Value="Nothing"/>
                                 <Setter Property="FontAttributes" Value="Bold"/>
                                 <Style.Triggers>
-                                <DataTrigger TargetType="Button" Binding="{Binding Device.Powerstate,Source={x:Reference me}}" Value="{x:Static logic:TasmotaDevice+Powerstates.Off}">
+                                <DataTrigger TargetType="Button" Binding="{Binding Device.Powerstate,Source={x:Reference me}}" Value="{x:Static tasmotaQuery:Device+Powerstates.Off}">
                                         <Setter Property="BackgroundColor" Value="DarkRed"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -109,7 +110,7 @@
                         </Button.Style>
                     </Button>
 
-                    <Grid Grid.Row="1" IsVisible="{Binding IsShutter}" Margin="0,8,0,0">
+                    <Grid Grid.Row="1" IsVisible="{Binding DeviceProperties.IsShutter}" Margin="0,8,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="240"/>
                             <ColumnDefinition/>

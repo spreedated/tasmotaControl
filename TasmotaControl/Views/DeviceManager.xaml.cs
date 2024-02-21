@@ -14,7 +14,7 @@ public partial class DeviceManager : ContentPage
     {
         string input = await p.DisplayPromptAsync("Add device", $"Please enter an IPv4 address.", initialValue: "192.168.10.");
 
-        if (string.IsNullOrEmpty(input) || !IPAddress.TryParse(input, out _) || RuntimeStorage.ConfigurationHandler.RuntimeConfiguration.Devices.Exists(x => x.Address == input))
+        if (string.IsNullOrEmpty(input) || !IPAddress.TryParse(input, out IPAddress ipadd) || RuntimeStorage.ConfigurationHandler.RuntimeConfiguration.Devices.Exists(x => x.Address == ipadd))
         {
             return;
         }
