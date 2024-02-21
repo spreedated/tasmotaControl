@@ -192,21 +192,21 @@ public partial class DeviceContent : ContentView
 
     private void InitializeRotationAnimation()
     {
-        this.RefreshAnimation = new((v) => this.RefreshIcon.Rotation = v, 0, 360, Easing.Linear);
-        this.PropertyChanged += (s, e) =>
-        {
-            if (e.PropertyName == nameof(this.IsLoading))
-            {
-                if (this.IsLoading)
-                {
-                    this.RefreshAnimation.Commit(this, "refreshRotation", 16, 1000, Easing.Linear, (v, c) => this.RefreshIcon.Rotation = 0, () => true);
-                }
-                else
-                {
-                    this.AbortAnimation("refreshRotation");
-                }
-            }
-        };
+        //this.RefreshAnimation = new((v) => this.RefreshIcon.Rotation = v, 0, 360, Easing.Linear);
+        //this.PropertyChanged += (s, e) =>
+        //{
+        //    if (e.PropertyName == nameof(this.IsLoading))
+        //    {
+        //        if (this.IsLoading)
+        //        {
+        //            this.RefreshAnimation.Commit(this, "refreshRotation", 16, 1000, Easing.Linear, (v, c) => this.RefreshIcon.Rotation = 0, () => true);
+        //        }
+        //        else
+        //        {
+        //            this.AbortAnimation("refreshRotation");
+        //        }
+        //    }
+        //};
     }
 
     private void InitializeAutoRefreshTimer()

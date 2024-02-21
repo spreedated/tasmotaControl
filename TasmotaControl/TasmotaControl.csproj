@@ -38,14 +38,14 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#191c1e" TintColor="#FFFFFF" ForegroundScale="0.3" />
+		<!--<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#191c1e" TintColor="#FFFFFF" ForegroundScale="0.3" />-->
 
 		<!-- Splash Screen -->
     <MauiSplashScreen Include="Resources\Splash\splash.svg" TintColor="#FFFFFF" Color="#191c1e" BaseSize="128,128" />
     
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\appicon.svg" BaseSize="256,256" />
+		<!--<MauiImage Update="Resources\Images\appicon.svg" BaseSize="256,256" />-->
 		<MauiImage Update="Resources\Images\tasmota_icon.svg" BaseSize="256,256" />
 		<MauiImage Update="Resources\Images\nexn_logo.svg" BaseSize="256,256" />
 		<MauiImage Update="Resources\Images\nexn_logo_black.svg" BaseSize="256,256" />
@@ -67,6 +67,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
 	  <PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="2.1.1" />
 	  <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
 	  <PackageReference Include="DevExpress.Maui.Controls" Version="23.2.4" />
@@ -155,14 +157,6 @@
 	  <MauiXaml Update="ViewDataTemplates\DeviceContent.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.7" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
 	</ItemGroup>
 
 </Project>
