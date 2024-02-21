@@ -48,7 +48,7 @@
                     <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding DeviceManagerCommand}"/>
                     </HorizontalStackLayout.GestureRecognizers>
-                    <icon:MauiIcon Icon="Devices" IconSize="16" Margin="0,0,8,0"/>
+                    <icon:MauiIcon Icon="Devices" IconSize="16" Margin="0,0,8,0" IconColor="#FFFFFF"/>
                     <Label Text="{x:Static strings:AppStrings.DEVICE_MANAGER}" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
                 </HorizontalStackLayout>
 
@@ -56,7 +56,7 @@
                     <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding DebugCommand}"/>
                     </HorizontalStackLayout.GestureRecognizers>
-                    <icon:MauiIcon Icon="BugReport" IconSize="16" Margin="0,0,8,0"/>
+                    <icon:MauiIcon Icon="BugReport" IconSize="16" Margin="0,0,8,0" IconColor="#FFFFFF"/>
                     <Label Text="Debug" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
                 </HorizontalStackLayout>
 
@@ -64,7 +64,7 @@
                     <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AboutCommand}"/>
                     </HorizontalStackLayout.GestureRecognizers>
-                    <icon:MauiIcon Icon="InfoOutline" IconSize="16" Margin="0,0,8,0"/>
+                    <icon:MauiIcon Icon="InfoOutline" IconSize="16" Margin="0,0,8,0" IconColor="#FFFFFF"/>
                     <Label Text="{x:Static strings:AppStrings.ABOUT}" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
                 </HorizontalStackLayout>
 

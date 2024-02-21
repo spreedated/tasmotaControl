@@ -1,3 +1,4 @@
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,7 +13,7 @@ public partial class DeviceManager : ContentPage
 {
     public ICommand AddCommand { get; } = new Command<Page>(async (p) =>
     {
-        string input = await p.DisplayPromptAsync("Add device", $"Please enter an IPv4 address.", initialValue: "192.168.10.");
+        string input = await p.DisplayPromptAsync("Add device", $"Please enter an IPv4 address.", initialValue: "192.168.10.", keyboard: Keyboard.Numeric);
 
         if (string.IsNullOrEmpty(input) || !IPAddress.TryParse(input, out IPAddress ipadd) || RuntimeStorage.ConfigurationHandler.RuntimeConfiguration.Devices.Exists(x => x.Address == ipadd))
         {
