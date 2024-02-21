@@ -9,13 +9,14 @@
              xmlns:cv="clr-namespace:neXn.Lib.Maui.ViewLogic.Converters;assembly=neXn.Lib.Maui"
              xmlns:dd="clr-namespace:TasCon.ViewDataTemplates"
              xmlns:strings="clr-namespace:TasCon.Resources.Strings"
+             xmlns:icon="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
              x:Class="TasCon.Views.DeviceManager"
              Title="{x:Static strings:AppStrings.DEVICE_MANAGER}"
              x:Name="me">
 
     <Shell.TitleView>
         <HorizontalStackLayout VerticalOptions="Center">
-            <!--<icon:MauiIcon Icon="Devices" IconSize="24" IconColor="{StaticResource NothingGrey}" Margin="0,0,12,0" />-->
+            <icon:MauiIcon Icon="Devices" IconSize="24" IconColor="{StaticResource NothingGrey}" Margin="0,0,12,0" />
             <Label Text="{x:Static strings:AppStrings.DEVICE_MANAGER}" TextTransform="Uppercase" FontSize="24" FontFamily="Nothing" HorizontalTextAlignment="Center" />
         </HorizontalStackLayout>
     </Shell.TitleView>

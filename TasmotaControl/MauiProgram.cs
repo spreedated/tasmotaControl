@@ -13,8 +13,8 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         DependencyService.Register<IWifiServiceControl, WifiServiceControl>();
-        
-        var builder = MauiApp.CreateBuilder();
+
+        MauiAppBuilder builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()

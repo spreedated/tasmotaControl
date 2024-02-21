@@ -7,6 +7,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:ve="clr-namespace:neXn.Lib.Maui.ViewElements;assembly=neXn.Lib.Maui"
              xmlns:tasmotaQuery="clr-namespace:TasmotaQuery;assembly=TasmotaQuery"
+             xmlns:icon="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
              x:Class="TasCon.ViewDataTemplates.DeviceContent"
              x:DataType="{x:Type logic:TasmotaDevice}"
              BindingContext="{Binding Device, Source={x:Reference me}, Mode=OneWayToSource}"
@@ -62,7 +63,7 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <!--<material:MauiIcon x:Name="RefreshIcon" IsVisible="{Binding IsLoading, Source={x:Reference me}}" Icon="Refresh" IconColor="{StaticResource NothingGrey}" Margin="0,-18,-2,0" IconSize="32" WidthRequest="32" HeightRequest="32" HorizontalOptions="End" />-->
+                    <icon:MauiIcon x:Name="RefreshIcon" IsVisible="{Binding IsLoading, Source={x:Reference me}}" Icon="Refresh" IconColor="{StaticResource NothingGrey}" Margin="0,-18,-2,0" IconSize="32" WidthRequest="32" HeightRequest="32" HorizontalOptions="End" />
 
                     <VerticalStackLayout Grid.Row="0">
                         <Label Grid.Column="0" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontFamily="Nothing" FontAttributes="Bold">
@@ -79,8 +80,8 @@
                         <toolkit:Expander Margin="10,10,0,0" IsExpanded="{Binding IsExpandedInformation,Source={x:Reference me}, Mode=OneWayToSource}">
                             <toolkit:Expander.Header>
                                 <HorizontalStackLayout>
-                                    <!--<material:MauiIcon Margin="0,0,2,0" IsVisible="{Binding IsExpandedInformation,Source={x:Reference me}, Converter={nconv:BoolReverseConverter}}" IconColor="{StaticResource NothingGrey}" Icon="ChevronRight" IconSize="16"/>
-                                    <material:MauiIcon Margin="0,0,2,0" IsVisible="{Binding IsExpandedInformation,Source={x:Reference me}}" IconColor="{StaticResource NothingGrey}" Icon="ExpandMore" IconSize="16"/>-->
+                                    <icon:MauiIcon Margin="0,0,2,0" IsVisible="{Binding IsExpandedInformation,Source={x:Reference me}, Converter={nconv:BoolReverseConverter}}" IconColor="{StaticResource NothingGrey}" Icon="ChevronRight" IconSize="16"/>
+                                    <icon:MauiIcon Margin="0,0,2,0" IsVisible="{Binding IsExpandedInformation,Source={x:Reference me}}" IconColor="{StaticResource NothingGrey}" Icon="ExpandMore" IconSize="16"/>
                                     <Label Text="INFORMATION" TextColor="{StaticResource NothingGrey}" FontFamily="Nothing" Margin="0,0,2,0"/>
                                 </HorizontalStackLayout>
                             </toolkit:Expander.Header>
@@ -120,8 +121,8 @@
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Column="0" Grid.Row="0">
-                            <!--<material:MauiIcon Icon="RollerShadesClosed" IconColor="{StaticResource NothingGrey}" IconSize="16" Margin="18,0,0,0"/>
-                            <material:MauiIcon HorizontalOptions="End" Icon="RollerShades" IconColor="{StaticResource NothingGrey}" IconSize="16" Margin="0,0,18,0"/>-->
+                            <icon:MauiIcon Icon="RollerShadesClosed" IconColor="{StaticResource NothingGrey}" IconSize="16" Margin="18,0,0,0"/>
+                            <icon:MauiIcon HorizontalOptions="End" Icon="RollerShades" IconColor="{StaticResource NothingGrey}" IconSize="16" Margin="0,0,18,0"/>
                         </Grid>
 
                         <Slider Grid.Column="0" Grid.Row="1" Maximum="100" Minimum="0" Value="{Binding ShutterValue, Source={x:Reference me}, Mode=TwoWay}" Margin="0,0,0,0" HeightRequest="32">

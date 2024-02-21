@@ -25,7 +25,6 @@
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">31.0</SupportedOSPlatformVersion>
     <NoWarn>1701;1702;IDE0063</NoWarn>
-	
 </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -69,7 +68,7 @@
 	<ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
-	  <PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="2.1.1" />
+	  <PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="1.2.1" />
 	  <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
 	  <PackageReference Include="DevExpress.Maui.Controls" Version="23.2.4" />
 	  <PackageReference Include="DevExpress.Maui.Editors" Version="23.2.4" />

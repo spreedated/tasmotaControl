@@ -15,7 +15,7 @@
 
     <Shell.TitleView>
         <HorizontalStackLayout VerticalOptions="Center">
-            <!--icon:MauiIcon Icon="InfoOutline" IconSize="24" IconColor="{StaticResource NothingGrey}" Margin="0,0,12,0" />-->
+            <icon:MauiIcon Icon="InfoOutline" IconSize="24" IconColor="{StaticResource NothingGrey}" Margin="0,0,12,0" />
             <Label Text="{x:Static strings:AppStrings.ABOUT}" TextTransform="Uppercase" FontSize="24" FontFamily="Nothing" HorizontalTextAlignment="Center" />
         </HorizontalStackLayout>
     </Shell.TitleView>
